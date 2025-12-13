@@ -488,57 +488,90 @@ p {
   font-weight: bold;
 }
 
-/* Contact Section */
+/* Contact Section - Professional & Simple */
 .contact {
   padding: 100px 0;
   background: var(--light-gray);
 }
 
-.contact-content {
+.contact-professional {
   display: flex;
   justify-content: center;
 }
 
-.contact-info {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+.contact-card-simple {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: var(--shadow-lg);
   max-width: 1000px;
   width: 100%;
+  border: 1px solid var(--border-color);
 }
 
-.contact-item {
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.contact-item-pro {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 1rem;
-  margin-bottom: 2rem;
-  animation: fadeInUp 0.8s ease;
+  padding: 1.5rem;
+  background: var(--light-gray);
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
 }
 
-.contact-icon {
+.contact-item-pro:hover {
+  background: #f8fafc;
+  border-color: var(--light-claret);
+  transform: translateY(-2px);
+}
+
+.contact-icon-pro {
   width: 50px;
   height: 50px;
-  background: var(--gradient-claret);
-  border-radius: 10px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  background: var(--gradient-claret);
 }
 
-.contact-icon i {
+.contact-icon-pro i {
   color: var(--white);
   font-size: 1.2rem;
 }
 
-.contact-details h4 {
-  margin-bottom: 0.5rem;
+.contact-text h4 {
   color: var(--text-dark);
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
-.contact-details p {
+.contact-text p {
   color: var(--text-light);
   margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.contact-link {
+  color: var(--primary-claret);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.contact-link:hover {
+  color: var(--dark-claret);
 }
 
 /* Contact Form */
@@ -759,9 +792,9 @@ p {
     grid-template-columns: 1fr;
   }
 
-  .contact-info {
+  .contact-grid {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.5rem;
   }
 
   .footer-content {
@@ -817,8 +850,16 @@ p {
 
   .service-card,
   .feature-item,
-  .contact-form {
+  .contact-card-simple {
     padding: 1.5rem;
+  }
+
+  .contact-card-simple {
+    margin: 0 15px;
+  }
+
+  .contact-item-pro {
+    padding: 1rem;
   }
 
   .footer-content {
