@@ -663,7 +663,7 @@ p {
 
 .footer-contact p {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: 0.5rem;
   margin-bottom: 0.8rem;
   color: #9ca3af;
