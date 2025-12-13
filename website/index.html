@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Binqad Business Services LLC - UAE Business Solutions</title>
+    <title>BinQad Business Services LLC - UAE Business Solutions</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="stylesheet" href="css/style.css" />
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -12,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -21,7 +22,7 @@
     <nav class="navbar">
       <div class="nav-container">
         <div class="nav-logo">
-          <h2>Binqad</h2>
+          <h2>BinQad</h2>
           <span>Business Services</span>
         </div>
         <div class="nav-menu">
@@ -48,8 +49,18 @@
             setup to scale - we handle it all.
           </p>
           <div class="hero-buttons">
-            <button class="btn-primary">Get Started</button>
-            <button class="btn-secondary">Learn More</button>
+            <button
+              class="btn-primary"
+              onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})"
+            >
+              Get Started
+            </button>
+            <button
+              class="btn-secondary"
+              onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'})"
+            >
+              Learn More
+            </button>
           </div>
         </div>
         <div class="hero-image">
@@ -75,7 +86,7 @@
     <section id="about" class="about">
       <div class="container">
         <div class="section-header">
-          <h2>About Binqad Business Services</h2>
+          <h2>About BinQad Business Services</h2>
           <p>
             Your trusted partner for comprehensive business solutions in the UAE
           </p>
@@ -85,7 +96,7 @@
           <div class="about-text">
             <h3>Over 12 Years of Excellence</h3>
             <p>
-              Binqad Business Services LLC is a UAE-based consultancy delivering
+              BinQad Business Services LLC is a UAE-based consultancy delivering
               end-to-end corporate solutions for entrepreneurs, investors, and
               established businesses. With over 12 years of industry experience,
               we help organizations launch, operate, and scale with confidence
@@ -347,47 +358,27 @@
               <div class="contact-details">
                 <h4>Address</h4>
                 <p>
+                  BinQad Business Services LLC<br />
                   Saheel Tower 1, Office No: 1706<br />
                   Al Nahda 1, behind Mai Tower<br />
-                  Dubai, UAE
+                  Dubai, United Arab Emirates
                 </p>
               </div>
             </div>
-          </div>
 
-          <div class="contact-form">
-            <form>
-              <div class="form-group">
-                <input type="text" placeholder="Your Name" required />
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-clock"></i>
               </div>
-              <div class="form-group">
-                <input type="email" placeholder="Your Email" required />
+              <div class="contact-details">
+                <h4>Business Hours</h4>
+                <p>
+                  Sunday - Thursday: 9:00 AM - 6:00 PM<br />
+                  Saturday: 9:00 AM - 2:00 PM<br />
+                  Friday: Closed
+                </p>
               </div>
-              <div class="form-group">
-                <input type="tel" placeholder="Phone Number" required />
-              </div>
-              <div class="form-group">
-                <select required>
-                  <option value="">Select Service</option>
-                  <option value="business-setup">Business Setup</option>
-                  <option value="visa-services">Visa Services</option>
-                  <option value="attestation">Attestation</option>
-                  <option value="accounting">Accounting</option>
-                  <option value="tax-compliance">Tax Compliance</option>
-                  <option value="hr-payroll">HR & Payroll</option>
-                  <option value="strategy">Business Strategy</option>
-                  <option value="corporate-support">Corporate Support</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <textarea
-                  placeholder="Your Message"
-                  rows="5"
-                  required
-                ></textarea>
-              </div>
-              <button type="submit" class="btn-primary">Send Message</button>
-            </form>
+            </div>
           </div>
         </div>
       </div>
@@ -399,7 +390,7 @@
         <div class="footer-content">
           <div class="footer-section">
             <div class="footer-logo">
-              <h3>Binqad</h3>
+              <h3>BinQad</h3>
               <span>Business Services LLC</span>
             </div>
             <p>
@@ -434,13 +425,17 @@
             <div class="footer-contact">
               <p><i class="fas fa-phone"></i> +971 542346645</p>
               <p><i class="fas fa-envelope"></i> info@binqad.ae</p>
-              <p><i class="fas fa-map-marker-alt"></i> Dubai, UAE</p>
+              <p>
+                <i class="fas fa-map-marker-alt"></i> BinQad Business Services
+                LLC<br />Saheel Tower 1, Office No: 1706<br />Al Nahda 1, behind
+                Mai Tower<br />Dubai, United Arab Emirates
+              </p>
             </div>
           </div>
         </div>
 
         <div class="footer-bottom">
-          <p>&copy; 2024 Binqad Business Services LLC. All rights reserved.</p>
+          <p>&copy; 2024 BinQad Business Services LLC. All rights reserved.</p>
         </div>
       </div>
     </footer>

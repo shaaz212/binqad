@@ -10,19 +10,20 @@ html {
 }
 
 body {
-  font-family: "Inter", sans-serif;
+  font-family: "Poppins", sans-serif;
   line-height: 1.6;
   color: #333;
   overflow-x: hidden;
 }
 
-/* CSS Variables for Violet Theme */
+/* CSS Variables for Claret & Black Theme */
 :root {
-  --primary-violet: #7c3aed;
-  --secondary-violet: #a855f7;
-  --light-violet: #c4b5fd;
-  --dark-violet: #5b21b6;
-  --gradient-violet: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+  --primary-claret: #750f3b;
+  --secondary-claret: #8b1538;
+  --light-claret: #a61e4d;
+  --dark-claret: #5c0b2e;
+  --black: #000000;
+  --gradient-claret: linear-gradient(135deg, #750f3b 0%, #8b1538 100%);
   --text-dark: #1f2937;
   --text-light: #6b7280;
   --white: #ffffff;
@@ -92,7 +93,7 @@ p {
 }
 
 .nav-logo h2 {
-  color: var(--primary-violet);
+  color: var(--primary-claret);
   margin: 0;
   font-size: 1.8rem;
 }
@@ -124,7 +125,7 @@ p {
   height: 2px;
   bottom: -5px;
   left: 0;
-  background: var(--gradient-violet);
+  background: var(--gradient-claret);
   transition: width 0.3s ease;
 }
 
@@ -135,7 +136,7 @@ p {
 
 .nav-link:hover,
 .nav-link.active {
-  color: var(--primary-violet);
+  color: var(--primary-claret);
 }
 
 .nav-toggle {
@@ -147,7 +148,7 @@ p {
 .bar {
   width: 25px;
   height: 3px;
-  background: var(--primary-violet);
+  background: var(--primary-claret);
   margin: 3px 0;
   transition: 0.3s;
   border-radius: 2px;
@@ -155,7 +156,7 @@ p {
 
 /* Hero Section */
 .hero {
-  background: var(--gradient-violet);
+  background: var(--gradient-claret);
   padding: 120px 0 80px;
   min-height: 100vh;
   display: flex;
@@ -221,7 +222,7 @@ p {
 
 .btn-primary {
   background: var(--white);
-  color: var(--primary-violet);
+  color: var(--primary-claret);
   box-shadow: var(--shadow);
 }
 
@@ -238,7 +239,7 @@ p {
 
 .btn-secondary:hover {
   background: var(--white);
-  color: var(--primary-violet);
+  color: var(--primary-claret);
 }
 
 /* Hero Illustration */
@@ -269,7 +270,7 @@ p {
 
 .floating-card i {
   font-size: 2rem;
-  color: var(--primary-violet);
+  color: var(--primary-claret);
   margin-bottom: 10px;
 }
 
@@ -317,7 +318,7 @@ p {
   transform: translateX(-50%);
   width: 60px;
   height: 3px;
-  background: var(--gradient-violet);
+  background: var(--gradient-claret);
   border-radius: 2px;
 }
 
@@ -340,7 +341,7 @@ p {
 }
 
 .about-text h3 {
-  color: var(--primary-violet);
+  color: var(--primary-claret);
   margin-bottom: 1.5rem;
 }
 
@@ -366,7 +367,7 @@ p {
 
 .mission h4,
 .vision h4 {
-  color: var(--primary-violet);
+  color: var(--primary-claret);
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
@@ -397,7 +398,7 @@ p {
 .feature-icon {
   width: 60px;
   height: 60px;
-  background: var(--gradient-violet);
+  background: var(--gradient-claret);
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -442,7 +443,7 @@ p {
 
 .service-card:hover {
   background: var(--white);
-  border-color: var(--light-violet);
+  border-color: var(--light-claret);
   transform: translateY(-8px);
   box-shadow: var(--shadow-lg);
 }
@@ -450,7 +451,7 @@ p {
 .service-icon {
   width: 70px;
   height: 70px;
-  background: var(--gradient-violet);
+  background: var(--gradient-claret);
   border-radius: 15px;
   display: flex;
   align-items: center;
@@ -483,7 +484,7 @@ p {
   content: "✓";
   position: absolute;
   left: 0;
-  color: var(--primary-violet);
+  color: var(--primary-claret);
   font-weight: bold;
 }
 
@@ -494,9 +495,16 @@ p {
 }
 
 .contact-content {
+  display: flex;
+  justify-content: center;
+}
+
+.contact-info {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1000px;
+  width: 100%;
 }
 
 .contact-item {
@@ -510,7 +518,7 @@ p {
 .contact-icon {
   width: 50px;
   height: 50px;
-  background: var(--gradient-violet);
+  background: var(--gradient-claret);
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -562,8 +570,8 @@ p {
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: var(--primary-violet);
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+  border-color: var(--primary-claret);
+  box-shadow: 0 0 0 3px rgba(117, 15, 59, 0.1);
 }
 
 .form-group textarea {
@@ -592,7 +600,7 @@ p {
 }
 
 .footer-logo span {
-  color: var(--light-violet);
+  color: var(--light-claret);
   font-size: 0.9rem;
 }
 
@@ -617,7 +625,7 @@ p {
 }
 
 .footer-section ul li a:hover {
-  color: var(--light-violet);
+  color: var(--light-claret);
 }
 
 .footer-contact p {
@@ -629,7 +637,7 @@ p {
 }
 
 .footer-contact i {
-  color: var(--light-violet);
+  color: var(--light-claret);
 }
 
 .footer-bottom {
@@ -751,7 +759,7 @@ p {
     grid-template-columns: 1fr;
   }
 
-  .contact-content {
+  .contact-info {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
@@ -857,10 +865,10 @@ p {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--primary-violet);
+  background: var(--primary-claret);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--dark-violet);
+  background: var(--dark-claret);
 }
