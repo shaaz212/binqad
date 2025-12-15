@@ -1,4 +1,159 @@
-// Services Carousel Functionality\nclass ServicesCarousel {\n  constructor() {\n    this.track = document.getElementById('carousel-track');\n    this.prevBtn = document.getElementById('carousel-prev');\n    this.nextBtn = document.getElementById('carousel-next');\n    this.indicatorsContainer = document.getElementById('carousel-indicators');\n    \n    if (!this.track) return; // Exit if carousel not found\n    \n    this.slides = Array.from(this.track.children);\n    this.currentIndex = 0;\n    this.slidesPerView = this.getSlidesPerView();\n    this.maxIndex = Math.max(0, this.slides.length - this.slidesPerView);\n    \n    this.init();\n  }\n  \n  getSlidesPerView() {\n    const width = window.innerWidth;\n    if (width >= 1200) return 3;\n    if (width >= 768) return 2;\n    return 1;\n  }\n  \n  init() {\n    this.createIndicators();\n    this.updateCarousel();\n    this.bindEvents();\n    this.startAutoPlay();\n  }\n  \n  createIndicators() {\n    this.indicatorsContainer.innerHTML = '';\n    const indicatorCount = this.maxIndex + 1;\n    \n    for (let i = 0; i < indicatorCount; i++) {\n      const indicator = document.createElement('div');\n      indicator.classList.add('carousel-indicator');\n      if (i === 0) indicator.classList.add('active');\n      indicator.addEventListener('click', () => this.goToSlide(i));\n      this.indicatorsContainer.appendChild(indicator);\n    }\n  }\n  \n  updateCarousel() {\n    const slideWidth = this.slides[0].offsetWidth + 32; // 32px for gap\n    const translateX = -this.currentIndex * slideWidth;\n    this.track.style.transform = `translateX(${translateX}px)`;\n    \n    // Update buttons\n    this.prevBtn.disabled = this.currentIndex === 0;\n    this.nextBtn.disabled = this.currentIndex === this.maxIndex;\n    \n    // Update indicators\n    document.querySelectorAll('.carousel-indicator').forEach((indicator, index) => {\n      indicator.classList.toggle('active', index === this.currentIndex);\n    });\n  }\n  \n  goToSlide(index) {\n    this.currentIndex = Math.max(0, Math.min(index, this.maxIndex));\n    this.updateCarousel();\n    this.resetAutoPlay();\n  }\n  \n  nextSlide() {\n    if (this.currentIndex < this.maxIndex) {\n      this.currentIndex++;\n      this.updateCarousel();\n    }\n  }\n  \n  prevSlide() {\n    if (this.currentIndex > 0) {\n      this.currentIndex--;\n      this.updateCarousel();\n    }\n  }\n  \n  bindEvents() {\n    this.prevBtn.addEventListener('click', () => {\n      this.prevSlide();\n      this.resetAutoPlay();\n    });\n    \n    this.nextBtn.addEventListener('click', () => {\n      this.nextSlide();\n      this.resetAutoPlay();\n    });\n    \n    // Handle window resize\n    window.addEventListener('resize', () => {\n      clearTimeout(this.resizeTimeout);\n      this.resizeTimeout = setTimeout(() => {\n        const newSlidesPerView = this.getSlidesPerView();\n        if (newSlidesPerView !== this.slidesPerView) {\n          this.slidesPerView = newSlidesPerView;\n          this.maxIndex = Math.max(0, this.slides.length - this.slidesPerView);\n          this.currentIndex = Math.min(this.currentIndex, this.maxIndex);\n          this.createIndicators();\n          this.updateCarousel();\n        }\n      }, 250);\n    });\n    \n    // Pause autoplay on hover\n    this.track.addEventListener('mouseenter', () => this.pauseAutoPlay());\n    this.track.addEventListener('mouseleave', () => this.startAutoPlay());\n  }\n  \n  startAutoPlay() {\n    this.autoPlayInterval = setInterval(() => {\n      if (this.currentIndex === this.maxIndex) {\n        this.goToSlide(0);\n      } else {\n        this.nextSlide();\n      }\n    }, 4000);\n  }\n  \n  pauseAutoPlay() {\n    clearInterval(this.autoPlayInterval);\n  }\n  \n  resetAutoPlay() {\n    this.pauseAutoPlay();\n    this.startAutoPlay();\n  }\n}\n\n// Initialize carousel when DOM is loaded\ndocument.addEventListener('DOMContentLoaded', () => {\n  new ServicesCarousel();\n});\n\n// Mobile Navigation Toggle
+// Services Carousel Functionality
+class ServicesCarousel {
+  constructor() {
+    this.track = document.getElementById('carousel-track');
+    this.prevBtn = document.getElementById('carousel-prev');
+    this.nextBtn = document.getElementById('carousel-next');
+    this.indicatorsContainer = document.getElementById('carousel-indicators');
+    
+    if (!this.track || !this.prevBtn || !this.nextBtn) {
+      console.error('Carousel elements not found');
+      return;
+    }
+    
+    this.slides = Array.from(this.track.children);
+    this.currentIndex = 0;
+    this.slidesPerView = this.getSlidesPerView();
+    this.maxIndex = Math.max(0, this.slides.length - this.slidesPerView);
+    this.autoPlayInterval = null;
+    
+    this.init();
+  }
+  
+  getSlidesPerView() {
+    const width = window.innerWidth;
+    if (width >= 1200) return 3;
+    if (width >= 768) return 2;
+    return 1;
+  }
+  
+  init() {
+    this.createIndicators();
+    this.updateCarousel();
+    this.bindEvents();
+    this.startAutoPlay();
+  }
+  
+  createIndicators() {
+    if (!this.indicatorsContainer) return;
+    this.indicatorsContainer.innerHTML = '';
+    const indicatorCount = this.maxIndex + 1;
+    
+    for (let i = 0; i < indicatorCount; i++) {
+      const indicator = document.createElement('div');
+      indicator.classList.add('carousel-indicator');
+      if (i === 0) indicator.classList.add('active');
+      indicator.addEventListener('click', () => this.goToSlide(i));
+      this.indicatorsContainer.appendChild(indicator);
+    }
+  }
+  
+  updateCarousel() {
+    if (!this.track || this.slides.length === 0) return;
+    const slideWidth = this.slides[0].offsetWidth + 32; // 32px for gap
+    const translateX = -this.currentIndex * slideWidth;
+    this.track.style.transform = `translateX(${translateX}px)`;
+    
+    // Update buttons
+    if (this.prevBtn) this.prevBtn.disabled = this.currentIndex === 0;
+    if (this.nextBtn) this.nextBtn.disabled = this.currentIndex === this.maxIndex;
+    
+    // Update indicators
+    document.querySelectorAll('.carousel-indicator').forEach((indicator, index) => {
+      indicator.classList.toggle('active', index === this.currentIndex);
+    });
+  }
+  
+  goToSlide(index) {
+    this.currentIndex = Math.max(0, Math.min(index, this.maxIndex));
+    this.updateCarousel();
+    this.resetAutoPlay();
+  }
+  
+  nextSlide() {
+    if (this.currentIndex < this.maxIndex) {
+      this.currentIndex++;
+      this.updateCarousel();
+    }
+  }
+  
+  prevSlide() {
+    if (this.currentIndex > 0) {
+      this.currentIndex--;
+      this.updateCarousel();
+    }
+  }
+  
+  bindEvents() {
+    // Previous button
+    this.prevBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      console.log('Prev button clicked');
+      this.prevSlide();
+      this.resetAutoPlay();
+    });
+    
+    // Next button
+    this.nextBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      console.log('Next button clicked');
+      this.nextSlide();
+      this.resetAutoPlay();
+    });
+    
+    // Handle window resize
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        const newSlidesPerView = this.getSlidesPerView();
+        if (newSlidesPerView !== this.slidesPerView) {
+          this.slidesPerView = newSlidesPerView;
+          this.maxIndex = Math.max(0, this.slides.length - this.slidesPerView);
+          this.currentIndex = Math.min(this.currentIndex, this.maxIndex);
+          this.createIndicators();
+          this.updateCarousel();
+        }
+      }, 250);
+    });
+    
+    // Pause autoplay on hover
+    this.track.addEventListener('mouseenter', () => this.pauseAutoPlay());
+    this.track.addEventListener('mouseleave', () => this.startAutoPlay());
+  }
+  
+  startAutoPlay() {
+    if (this.autoPlayInterval) {
+      clearInterval(this.autoPlayInterval);
+    }
+    this.autoPlayInterval = setInterval(() => {
+      if (this.currentIndex === this.maxIndex) {
+        this.goToSlide(0);
+      } else {
+        this.nextSlide();
+      }
+    }, 4000);
+  }
+  
+  pauseAutoPlay() {
+    if (this.autoPlayInterval) {
+      clearInterval(this.autoPlayInterval);
+      this.autoPlayInterval = null;
+    }
+  }
+  
+  resetAutoPlay() {
+    this.pauseAutoPlay();
+    this.startAutoPlay();
+  }
+}
+
+// Initialize carousel when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  new ServicesCarousel();
+});
+
+// Mobile Navigation Toggle
 const mobileMenu = document.getElementById("mobile-menu");
 const navMenu = document.querySelector(".nav-menu");
 
