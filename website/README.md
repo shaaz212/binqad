@@ -1,8 +1,8 @@
-# Binqad Business Services LLC - Website
+# binQad Business Services LLC - Website
 
 ## Overview
 
-A professional, responsive static website for Binqad Business Services LLC, a UAE-based business consultancy company. The website features a modern violet theme, smooth animations, and comprehensive information about the company's services.
+A professional, responsive static website for binQad Business Services LLC, a UAE-based business consultancy company. The website features a modern violet theme, smooth animations, and comprehensive information about the company's services.
 
 ## Features
 

@@ -725,4 +725,4 @@ document.addEventListener("DOMContentLoaded", () => {
 // Initialize hero carousel
 const heroCarousel = new HeroCarousel();
 
-console.log("Binqad Business Services website loaded successfully!");
+console.log("binQad Business Services website loaded successfully!");
