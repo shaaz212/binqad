@@ -57,10 +57,19 @@ class UniquenessCarousel {
   }
   
   getSlidesPerView() {
-    const width = window.innerWidth;
-    if (width >= 1200) return 3;
-    if (width >= 768) return 2;
-    return 1;
+    // Dynamically calculate how many slides actually fit based on container and card width
+    if (!this.track || this.slides.length === 0) return 1;
+    
+    const container = this.track.parentElement;
+    if (!container) return 1;
+    
+    const containerWidth = container.offsetWidth;
+    const slideWidth = this.slides[0].offsetWidth;
+    const gap = 32; // 2rem gap between slides
+    
+    // Calculate how many complete slides fit
+    const slidesPerView = Math.floor((containerWidth + gap) / (slideWidth + gap));
+    return Math.max(1, slidesPerView);
   }
   
   init() {
@@ -90,9 +99,7 @@ class UniquenessCarousel {
     const translateX = -this.currentIndex * slideWidth;
     this.track.style.transform = `translateX(${translateX}px)`;
     
-    // Update buttons
-    if (this.prevBtn) this.prevBtn.disabled = this.currentIndex === 0;
-    if (this.nextBtn) this.nextBtn.disabled = this.currentIndex === this.maxIndex;
+    // Infinite loop - buttons always enabled
     
     // Update indicators
     document.querySelectorAll('#uniqueness-carousel-indicators .carousel-indicator').forEach((indicator, index) => {
@@ -107,17 +114,23 @@ class UniquenessCarousel {
   }
   
   nextSlide() {
+    // Infinite loop: wrap to start when reaching end
     if (this.currentIndex < this.maxIndex) {
       this.currentIndex++;
-      this.updateCarousel();
+    } else {
+      this.currentIndex = 0;
     }
+    this.updateCarousel();
   }
   
   prevSlide() {
+    // Infinite loop: wrap to end when at start
     if (this.currentIndex > 0) {
       this.currentIndex--;
-      this.updateCarousel();
+    } else {
+      this.currentIndex = this.maxIndex;
     }
+    this.updateCarousel();
   }
   
   bindEvents() {
