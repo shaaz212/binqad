@@ -43,6 +43,13 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
+      <div class="hero-background">
+        <div class="hero-slide active"></div>
+        <div class="hero-slide"></div>
+        <div class="hero-slide"></div>
+        <div class="hero-slide"></div>
+      </div>
+      <div class="hero-overlay"></div>
       <div class="hero-content">
         <div class="hero-text">
           <h1>Building Successful Enterprises in the UAE</h1>
@@ -50,7 +57,7 @@
             Complete business solutions with over 12 years of expertise. From
             setup to scale - we handle it all.
           </p>
-          <div class="hero-buttons">
+          <!-- <div class="hero-buttons">
             <button
               class="btn-primary"
               onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})"
@@ -63,7 +70,7 @@
             >
               Learn More
             </button>
-          </div>
+          </div> -->
         </div>
         <div class="hero-image">
           <div class="hero-illustration">
@@ -137,62 +144,99 @@
           <p>Seven key differentiators that set us apart in the UAE business services landscape</p>
         </div>
 
-        <div class="uniqueness-grid">
-          <div class="unique-item">
-            <div class="unique-number">1</div>
-            <div class="unique-content">
-              <h3>Complete Business Ecosystem</h3>
-              <p>BinQad is not just a service provider — we operate as a full business support ecosystem. From business setup to compliance, HR, taxation, finance and strategy, every essential service is managed under one roof.</p>
-            </div>
-          </div>
+        <div class="uniqueness-carousel">
+          <div class="carousel-container">
+            <button class="carousel-btn carousel-prev" id="uniqueness-carousel-prev">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            
+            <div class="carousel-wrapper">
+              <div class="carousel-track" id="uniqueness-carousel-track">
+                <div class="unique-item">
+                  <div class="unique-image">
+                    <img src="images/unique-1.jpg" alt="Complete Business Ecosystem" />
+                  </div>
+                  <div class="unique-number">1</div>
+                  <div class="unique-content">
+                    <h3>Complete Business Ecosystem</h3>
+                    <p>BinQad is not just a service provider — we operate as a full business support ecosystem. From business setup to compliance, HR, taxation, finance and strategy, every essential service is managed under one roof.</p>
+                  </div>
+                </div>
 
-          <div class="unique-item">
-            <div class="unique-number">2</div>
-            <div class="unique-content">
-              <h3>Process-Driven, Not Person-Dependent</h3>
-              <p>Our operations run on structured systems and documented workflows, not individual dependency. This ensures reliability, consistency, and quality delivery at every stage of your business journey.</p>
-            </div>
-          </div>
+                <div class="unique-item">
+                  <div class="unique-image">
+                    <img src="images/unique-2.jpg" alt="Process-Driven Operations" />
+                  </div>
+                  <div class="unique-number">2</div>
+                  <div class="unique-content">
+                    <h3>Process-Driven, Not Person-Dependent</h3>
+                    <p>Our operations run on structured systems and documented workflows, not individual dependency. This ensures reliability, consistency, and quality delivery at every stage of your business journey.</p>
+                  </div>
+                </div>
 
-          <div class="unique-item">
-            <div class="unique-number">3</div>
-            <div class="unique-content">
-              <h3>SLA-Based Service Delivery</h3>
-              <p>We work with defined service timelines and accountability standards. Clients experience transparency, faster processing, and professional control over every transaction and task.</p>
-            </div>
-          </div>
+                <div class="unique-item">
+                  <div class="unique-image">
+                    <img src="images/unique-3.jpg" alt="SLA-Based Service Delivery" />
+                  </div>
+                  <div class="unique-number">3</div>
+                  <div class="unique-content">
+                    <h3>SLA-Based Service Delivery</h3>
+                    <p>We work with defined service timelines and accountability standards. Clients experience transparency, faster processing, and professional control over every transaction and task.</p>
+                  </div>
+                </div>
 
-          <div class="unique-item">
-            <div class="unique-number">4</div>
-            <div class="unique-content">
-              <h3>Strategic, Not Just Administrative</h3>
-              <p>BinQad goes beyond paperwork by offering business advisory and optimization support. We help companies make informed decisions, not just complete formalities.</p>
-            </div>
-          </div>
+                <div class="unique-item">
+                  <div class="unique-image">
+                    <img src="images/unique-4.jpg" alt="Strategic Business Advisory" />
+                  </div>
+                  <div class="unique-number">4</div>
+                  <div class="unique-content">
+                    <h3>Strategic, Not Just Administrative</h3>
+                    <p>BinQad goes beyond paperwork by offering business advisory and optimization support. We help companies make informed decisions, not just complete formalities.</p>
+                  </div>
+                </div>
 
-          <div class="unique-item">
-            <div class="unique-number">5</div>
-            <div class="unique-content">
-              <h3>Compliance-First Culture</h3>
-              <p>We proactively monitor regulatory requirements across visas, tax, labor, and licensing. This protects your business from penalties and unexpected operational risks.</p>
-            </div>
-          </div>
+                <div class="unique-item">
+                  <div class="unique-image">
+                    <img src="images/unique-5.jpg" alt="Compliance-First Culture" />
+                  </div>
+                  <div class="unique-number">5</div>
+                  <div class="unique-content">
+                    <h3>Compliance-First Culture</h3>
+                    <p>We proactively monitor regulatory requirements across visas, tax, labor, and licensing. This protects your business from penalties and unexpected operational risks.</p>
+                  </div>
+                </div>
 
-          <div class="unique-item">
-            <div class="unique-number">6</div>
-            <div class="unique-content">
-              <h3>Transparency by Design</h3>
-              <p>Every process is structured to give clients clear visibility on cost, progress, and responsibility. No ambiguity. No hidden surprises.</p>
-            </div>
-          </div>
+                <div class="unique-item">
+                  <div class="unique-image">
+                    <img src="images/unique-6.jpg" alt="Transparency by Design" />
+                  </div>
+                  <div class="unique-number">6</div>
+                  <div class="unique-content">
+                    <h3>Transparency by Design</h3>
+                    <p>Every process is structured to give clients clear visibility on cost, progress, and responsibility. No ambiguity. No hidden surprises.</p>
+                  </div>
+                </div>
 
-          <div class="unique-item">
-            <div class="unique-number">7</div>
-            <div class="unique-content">
-              <h3>Relationship Over Transactions</h3>
-              <p>We build long-term partnerships, not one-time deals. Our role is to grow with our clients, not just serve them.</p>
+                <div class="unique-item">
+                  <div class="unique-image">
+                    <img src="images/unique-7.jpg" alt="Long-term Partnerships" />
+                  </div>
+                  <div class="unique-number">7</div>
+                  <div class="unique-content">
+                    <h3>Relationship Over Transactions</h3>
+                    <p>We build long-term partnerships, not one-time deals. Our role is to grow with our clients, not just serve them.</p>
+                  </div>
+                </div>
+              </div>
             </div>
+            
+            <button class="carousel-btn carousel-next" id="uniqueness-carousel-next">
+              <i class="fas fa-chevron-right"></i>
+            </button>
           </div>
+          
+          <div class="carousel-indicators" id="uniqueness-carousel-indicators"></div>
         </div>
       </div>
     </section>
@@ -205,134 +249,118 @@
           <p>End-to-end business solutions tailored for your success</p>
         </div>
 
-        <div class="services-carousel">
-          <div class="carousel-container">
-            <button class="carousel-btn carousel-prev" id="carousel-prev">
-              <i class="fas fa-chevron-left"></i>
-            </button>
-            
-            <div class="carousel-wrapper">
-              <div class="carousel-track" id="carousel-track">
-                <div class="service-card">
-                  <div class="service-icon">
-                    <i class="fas fa-building"></i>
-                  </div>
-                  <h3>UAE Business Setup</h3>
-                  <ul>
-                    <li>Trade license issuance, renewal & amendment</li>
-                    <li>Initial approvals and name reservation</li>
-                    <li>Commercial permits & branch registration</li>
-                    <li>Business compliance and inspections</li>
-                    <li>Investor advisory and setup guidance</li>
-                    <li>Company amendments & liquidation support</li>
-                  </ul>
-                </div>
-
-                <div class="service-card">
-                  <div class="service-icon">
-                    <i class="fas fa-passport"></i>
-                  </div>
-                  <h3>Visa & PRO Services</h3>
-                  <ul>
-                    <li>Employment, family, visit visa processing</li>
-                    <li>Golden visa processing</li>
-                    <li>Emirates ID and immigration services</li>
-                    <li>Establishment registration and PRO cards</li>
-                    <li>Work permits and labour services</li>
-                    <li>DHA, EHS, VIP medicals application</li>
-                  </ul>
-                </div>
-
-                <div class="service-card">
-                  <div class="service-icon">
-                    <i class="fas fa-certificate"></i>
-                  </div>
-                  <h3>Attestation & Legalisation</h3>
-                  <ul>
-                    <li>Educational, commercial & personal attestations</li>
-                    <li>Embassy and MOFA attestations</li>
-                    <li>Labour contract attestation</li>
-                    <li>Certificate legalization</li>
-                    <li>Lawyer attestation</li>
-                  </ul>
-                </div>
-
-                <div class="service-card">
-                  <div class="service-icon">
-                    <i class="fas fa-calculator"></i>
-                  </div>
-                  <h3>Accounting & Bookkeeping</h3>
-                  <ul>
-                    <li>Bookkeeping and financial reporting</li>
-                    <li>Invoice setup and accounts management</li>
-                    <li>Audit support and documentation</li>
-                    <li>Payroll accounting and expense tracking</li>
-                  </ul>
-                </div>
-
-                <div class="service-card">
-                  <div class="service-icon">
-                    <i class="fas fa-file-invoice-dollar"></i>
-                  </div>
-                  <h3>Tax Registration & Compliance</h3>
-                  <ul>
-                    <li>VAT registration and deregistration</li>
-                    <li>VAT filing and reporting</li>
-                    <li>Corporate tax registration and filing</li>
-                    <li>FTA amendments and compliance support</li>
-                    <li>Overdue filing and penalty resolution</li>
-                  </ul>
-                </div>
-
-                <div class="service-card">
-                  <div class="service-icon">
-                    <i class="fas fa-users"></i>
-                  </div>
-                  <h3>HR Consulting & Payroll</h3>
-                  <ul>
-                    <li>Labour contracts and amendments</li>
-                    <li>WPS registration and salary processing</li>
-                    <li>HR policy structure and documentation</li>
-                    <li>Emiratisation advisory and Nafis support</li>
-                  </ul>
-                </div>
-
-                <div class="service-card">
-                  <div class="service-icon">
-                    <i class="fas fa-chart-line"></i>
-                  </div>
-                  <h3>Business Strategy & Optimization</h3>
-                  <ul>
-                    <li>Business structuring and growth advisory</li>
-                    <li>Operational streamlining</li>
-                    <li>Cost optimization strategies</li>
-                    <li>Compliance risk management</li>
-                    <li>Process planning</li>
-                  </ul>
-                </div>
-
-                <div class="service-card">
-                  <div class="service-icon">
-                    <i class="fas fa-briefcase"></i>
-                  </div>
-                  <h3>Corporate Support Services</h3>
-                  <ul>
-                    <li>Legal assistance coordination</li>
-                    <li>Corporate documentation management</li>
-                    <li>Ownership transfer</li>
-                    <li>Bank account opening assistance</li>
-                    <li>Ongoing administrative support</li>
-                  </ul>
-                </div>
-              </div>
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-building"></i>
             </div>
-            
-            <button class="carousel-btn carousel-next" id="carousel-next">
-              <i class="fas fa-chevron-right"></i>
-            </button>
+            <h3>UAE Business Setup</h3>
+            <ul>
+              <li>Trade license issuance, renewal & amendment</li>
+              <li>Initial approvals and name reservation</li>
+              <li>Commercial permits & branch registration</li>
+              <li>Business compliance and inspections</li>
+              <li>Investor advisory and setup guidance</li>
+              <li>Company amendments & liquidation support</li>
+            </ul>
           </div>
-          
-          <div class="carousel-indicators" id="carousel-indicators"></div>
+
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-passport"></i>
+            </div>
+            <h3>Visa & PRO Services</h3>
+            <ul>
+              <li>Employment, family, visit visa processing</li>
+              <li>Golden visa processing</li>
+              <li>Emirates ID and immigration services</li>
+              <li>Establishment registration and PRO cards</li>
+              <li>Work permits and labour services</li>
+              <li>DHA, EHS, VIP medicals application</li>
+            </ul>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-certificate"></i>
+            </div>
+            <h3>Attestation & Legalisation</h3>
+            <ul>
+              <li>Educational, commercial & personal attestations</li>
+              <li>Embassy and MOFA attestations</li>
+              <li>Labour contract attestation</li>
+              <li>Certificate legalization</li>
+              <li>Lawyer attestation</li>
+            </ul>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-calculator"></i>
+            </div>
+            <h3>Accounting & Bookkeeping</h3>
+            <ul>
+              <li>Bookkeeping and financial reporting</li>
+              <li>Invoice setup and accounts management</li>
+              <li>Audit support and documentation</li>
+              <li>Payroll accounting and expense tracking</li>
+            </ul>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-file-invoice-dollar"></i>
+            </div>
+            <h3>Tax Registration & Compliance</h3>
+            <ul>
+              <li>VAT registration and deregistration</li>
+              <li>VAT filing and reporting</li>
+              <li>Corporate tax registration and filing</li>
+              <li>FTA amendments and compliance support</li>
+              <li>Overdue filing and penalty resolution</li>
+            </ul>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <h3>HR Consulting & Payroll</h3>
+            <ul>
+              <li>Labour contracts and amendments</li>
+              <li>WPS registration and salary processing</li>
+              <li>HR policy structure and documentation</li>
+              <li>Emiratisation advisory and Nafis support</li>
+            </ul>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <h3>Business Strategy & Optimization</h3>
+            <ul>
+              <li>Business structuring and growth advisory</li>
+              <li>Operational streamlining</li>
+              <li>Cost optimization strategies</li>
+              <li>Compliance risk management</li>
+              <li>Process planning</li>
+            </ul>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-briefcase"></i>
+            </div>
+            <h3>Corporate Support Services</h3>
+            <ul>
+              <li>Legal assistance coordination</li>
+              <li>Corporate documentation management</li>
+              <li>Ownership transfer</li>
+              <li>Bank account opening assistance</li>
+              <li>Ongoing administrative support</li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
