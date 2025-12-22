@@ -398,6 +398,35 @@ window.addEventListener('load', () => {
 });
 
 // Contact form enhancement (if you add a form later)
+
+// Back-to-top button: show on scroll and smooth-scroll to top
+document.addEventListener('DOMContentLoaded', () => {
+  const backBtn = document.getElementById('back-to-top');
+  if (!backBtn) return;
+
+  const toggleBackBtn = () => {
+    if (window.scrollY > 320) {
+      backBtn.classList.add('show');
+    } else {
+      backBtn.classList.remove('show');
+    }
+  };
+
+  // initial state
+  toggleBackBtn();
+
+  window.addEventListener('scroll', toggleBackBtn, { passive: true });
+
+  backBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // allow keyboard activation
+  backBtn.addEventListener('keyup', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') backBtn.click();
+  });
+});
 function handleContactForm() {
   const form = document.querySelector('.contact-form');
   if (form) {
