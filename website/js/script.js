@@ -279,7 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize carousels
   new HeroCarousel();
-  new UniquenessCarousel();
+  // uniqueness carousel removed per design; items will be static and clickable
 });
 
 // Service card modal: open popup and reveal points one by one
@@ -342,6 +342,37 @@ document.addEventListener('DOMContentLoaded', () => {
     serviceCards.forEach(card => {
       card.addEventListener('click', () => openModalFromCard(card));
     });
+
+    // Make uniqueness items open the same modal with paragraph content
+    const uniqueItems = document.querySelectorAll('.unique-item');
+    function openModalFromUnique(item) {
+      const img = item.querySelector('.unique-image img');
+      const titleEl = item.querySelector('.unique-content h3');
+      const para = item.querySelector('.unique-content p');
+
+      modalImage.src = img ? img.src : '';
+      modalImage.alt = titleEl ? titleEl.textContent : '';
+      modalTitle.textContent = titleEl ? titleEl.textContent : '';
+
+      modalPoints.innerHTML = '';
+      if (para) {
+        const newLi = document.createElement('li');
+        newLi.textContent = para.textContent;
+        modalPoints.appendChild(newLi);
+      }
+
+      overlay.classList.add('show');
+      overlay.setAttribute('aria-hidden', 'false');
+
+      // reveal the single paragraph
+      const items = Array.from(modalPoints.children);
+      items.forEach((itemEl, idx) => {
+        const t = setTimeout(() => { itemEl.classList.add('visible'); }, 200 + idx * 250);
+        revealTimers.push(t);
+      });
+    }
+
+    uniqueItems.forEach(u => u.addEventListener('click', () => openModalFromUnique(u)));
 
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay || e.target === modalClose) closeModal();
