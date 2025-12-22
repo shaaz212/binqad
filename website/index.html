@@ -84,6 +84,8 @@
             </button>
           </div> -->
         </div>
+        <!-- Floating cards removed per request -->
+        <!--
         <div class="hero-image">
           <div class="hero-illustration">
             <div class="floating-card card-1">
@@ -100,6 +102,8 @@
             </div>
           </div>
         </div>
+        -->
+        <!-- End floating cards -->
       </div>
     </section>
 
@@ -394,9 +398,10 @@
                 </div>
                 <div class="contact-text">
                   <h4>Call Us</h4>
-                  <a href="tel:+971542346645" class="contact-link"
-                    >+971 54 234 6645</a
-                  >
+                  <p class="contact-link-lines">
+                    <a href="tel:+971542346645" class="contact-link">+971 54 234 6645</a><br />
+                    <a href="tel:+97145663154" class="contact-link">+971 4 566 3154</a>
+                  </p>
                 </div>
               </div>
 
@@ -429,8 +434,7 @@
                 <div class="contact-text">
                   <h4>Business Hours</h4>
                   <p>
-                    Sunday - Thursday: 9 AM - 6 PM<br />Saturday: 9 AM - 2 PM<br />Friday:
-                    Closed
+                    Monday - Saturday: 9 AM - 6 PM<br />Sunday: Closed
                   </p>
                 </div>
               </div>
@@ -482,7 +486,8 @@
           <div class="footer-section">
             <h4>Contact Info</h4>
             <div class="footer-contact">
-              <p><i class="fas fa-phone"></i> +971 542346645</p>
+              <p><i class="fas fa-phone"></i> <a href="tel:+971542346645">+971 54 234 6645</a></p>
+              <p><i class="fas fa-phone"></i> <a href="tel:+97145663154">+971 4 566 3154</a></p>
               <p><i class="fas fa-envelope"></i> info@binqad.ae</p>
               <p>
                 <i class="fas fa-map-marker-alt"></i>binQad Business Services
@@ -500,5 +505,18 @@
     </footer>
 
     <script src="js/script.js"></script>
+    <!-- Service details modal -->
+    <div id="service-modal-overlay" class="modal-overlay" aria-hidden="true">
+      <div id="service-modal" class="service-modal" role="dialog" aria-modal="true">
+        <button class="modal-close" id="service-modal-close" aria-label="Close">&times;</button>
+        <div class="modal-body">
+          <div class="modal-image"><img src="" alt="" id="service-modal-image" /></div>
+          <div class="modal-info">
+            <h3 id="service-modal-title"></h3>
+            <ul id="service-modal-points" class="modal-points"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

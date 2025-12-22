@@ -282,6 +282,79 @@ document.addEventListener("DOMContentLoaded", () => {
   new UniquenessCarousel();
 });
 
+// Service card modal: open popup and reveal points one by one
+document.addEventListener('DOMContentLoaded', () => {
+  const serviceCards = document.querySelectorAll('.service-card');
+  const overlay = document.getElementById('service-modal-overlay');
+  const modal = document.getElementById('service-modal');
+  const modalImage = document.getElementById('service-modal-image');
+  const modalTitle = document.getElementById('service-modal-title');
+  const modalPoints = document.getElementById('service-modal-points');
+  const modalClose = document.getElementById('service-modal-close');
+  let revealTimers = [];
+
+  function clearRevealTimers() {
+    revealTimers.forEach(t => clearTimeout(t));
+    revealTimers = [];
+  }
+
+  function closeModal() {
+    if (!overlay) return;
+    overlay.classList.remove('show');
+    overlay.setAttribute('aria-hidden', 'true');
+    modalPoints.innerHTML = '';
+    modalImage.src = '';
+    modalTitle.textContent = '';
+    clearRevealTimers();
+  }
+
+  function openModalFromCard(card) {
+    const img = card.querySelector('.service-image img');
+    const titleEl = card.querySelector('h3');
+    const listItems = card.querySelectorAll('ul li');
+
+    modalImage.src = img ? img.src : '';
+    modalImage.alt = titleEl ? titleEl.textContent : '';
+    modalTitle.textContent = titleEl ? titleEl.textContent : '';
+
+    modalPoints.innerHTML = '';
+    listItems.forEach(li => {
+      const newLi = document.createElement('li');
+      newLi.textContent = li.textContent;
+      modalPoints.appendChild(newLi);
+    });
+
+    // show overlay
+    overlay.classList.add('show');
+    overlay.setAttribute('aria-hidden', 'false');
+
+    // reveal points one-by-one
+    const items = Array.from(modalPoints.children);
+    items.forEach((item, idx) => {
+      const t = setTimeout(() => {
+        item.classList.add('visible');
+      }, 250 * idx + 200); // cascade delay
+      revealTimers.push(t);
+    });
+  }
+
+  if (serviceCards && overlay && modal) {
+    serviceCards.forEach(card => {
+      card.addEventListener('click', () => openModalFromCard(card));
+    });
+
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay || e.target === modalClose) closeModal();
+    });
+
+    modalClose.addEventListener('click', closeModal);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+  }
+});
+
 // Handle floating cards animation
 window.addEventListener('load', () => {
   const floatingCards = document.querySelectorAll('.floating-card');
