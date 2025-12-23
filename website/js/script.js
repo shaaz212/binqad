@@ -292,6 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalPoints = document.getElementById('service-modal-points');
   const modalClose = document.getElementById('service-modal-close');
   let revealTimers = [];
+  let isModalOpen = false;
 
   function clearRevealTimers() {
     revealTimers.forEach(t => clearTimeout(t));
@@ -306,9 +307,16 @@ document.addEventListener('DOMContentLoaded', () => {
     modalImage.src = '';
     modalTitle.textContent = '';
     clearRevealTimers();
+    isModalOpen = false;
   }
 
   function openModalFromCard(card) {
+    // prevent duplicate opens and clear any pending reveals
+    clearRevealTimers();
+    if (!overlay) return;
+    if (isModalOpen) {
+      closeModal();
+    }
     const img = card.querySelector('.service-image img');
     const titleEl = card.querySelector('h3');
     const listItems = card.querySelectorAll('ul li');
@@ -336,12 +344,42 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 250 * idx + 200); // cascade delay
       revealTimers.push(t);
     });
+    isModalOpen = true;
   }
 
-  if (serviceCards && overlay && modal) {
+    if (serviceCards && overlay && modal) {
+    // Detect if device supports hover (desktop/laptop) vs primarily touch (mobile/tablet)
+    const isHoverCapable = window.matchMedia('(hover: hover)').matches;
+    let closeTimeout;
+
     serviceCards.forEach(card => {
-      card.addEventListener('click', () => openModalFromCard(card));
+      if (isHoverCapable) {
+        card.addEventListener('mouseenter', () => {
+          clearTimeout(closeTimeout);
+          openModalFromCard(card);
+        });
+        card.addEventListener('mouseleave', () => {
+          closeTimeout = setTimeout(() => {
+            closeModal();
+          }, 300);
+        });
+      } else {
+        // Touch devices: open on click
+        card.addEventListener('click', () => openModalFromCard(card));
+      }
     });
+
+    // Keep modal open when hovering over it
+    if (isHoverCapable && modal) {
+      modal.addEventListener('mouseenter', () => {
+        clearTimeout(closeTimeout);
+      });
+      modal.addEventListener('mouseleave', () => {
+        closeTimeout = setTimeout(() => {
+          closeModal();
+        }, 300);
+      });
+    }
 
     // Make uniqueness items open the same modal with paragraph content
     const uniqueItems = document.querySelectorAll('.unique-item');
@@ -370,9 +408,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const t = setTimeout(() => { itemEl.classList.add('visible'); }, 200 + idx * 250);
         revealTimers.push(t);
       });
+      isModalOpen = true;
     }
 
-    uniqueItems.forEach(u => u.addEventListener('click', () => openModalFromUnique(u)));
+    uniqueItems.forEach(u => {
+      if (isHoverCapable) {
+        u.addEventListener('mouseenter', () => {
+          clearTimeout(closeTimeout);
+          openModalFromUnique(u);
+        });
+        u.addEventListener('mouseleave', () => {
+          closeTimeout = setTimeout(() => {
+            closeModal();
+          }, 300);
+        });
+      } else {
+        u.addEventListener('click', () => openModalFromUnique(u));
+      }
+    });
 
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay || e.target === modalClose) closeModal();
