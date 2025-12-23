@@ -93,15 +93,7 @@
             </button>
           </div> -->
         </div>
-        <!-- Floating WhatsApp button (hero) -->
-        <a
-          href="https://wa.me/971542346645"
-          class="hero-whatsapp"
-          target="_blank"
-          aria-label="Chat on WhatsApp"
-        >
-          <i class="fab fa-whatsapp"></i>
-        </a>
+        <!-- Floating WhatsApp button (hero) - moved into global floating actions -->
         <!-- Floating cards removed per request -->
         <!--
         <div class="hero-image">
@@ -491,7 +483,7 @@
 
               <div
                 class="contact-item-pro office-location"
-                onclick="window.open('https://share.google/GcCHeDf24AVdCQl7A', '_blank')"
+                onclick="window.open('https://www.google.com/maps/place/Binqad+Business+Services+LLC/@25.2857233,55.3604656,17z/data=!3m1!4b1!4m6!3m5!1s0x3e5f5de454bc0831:0x51da2a93bb8729ca!8m2!3d25.2857233!4d55.3604656!16s%2Fg%2F11yn_04ntz?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoKLDEwMDc5MjA2OUgBUAM%3D', '_blank')"
               >
                 <div class="contact-icon-pro">
                   <i class="fas fa-map-marker-alt"></i>
@@ -524,10 +516,10 @@
           <div class="footer-section">
             <div class="footer-logo">
               <div class="nav-logo-footer">
-                <h3><span class="brand">binQad</span></h3>
+                <img src="images/logo3.png" alt="binQad Business Services" />
               </div>
 
-              <span>Business Services LLC</span>
+            
             </div>
             <p>
               Your trusted partner for comprehensive business solutions in the
@@ -610,9 +602,23 @@
       </div>
     </div>
 
-    <!-- Back to top button -->
-    <button id="back-to-top" class="back-to-top" aria-label="Back to top">
-      <i class="fas fa-arrow-up"></i>
-    </button>
+    <!-- Floating actions: stack chat + back-to-top to avoid overlap -->
+    <div class="floating-actions" aria-hidden="false">
+      <a
+        href="https://wa.me/971542346645"
+        class="hero-whatsapp"
+        target="_blank"
+        aria-label="Chat on WhatsApp"
+      >
+        <i class="fab fa-whatsapp"></i>
+      </a>
+
+      <!-- Back-to-top disabled per request (commented out) -->
+      <!--
+      <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+      </button>
+      -->
+    </div>
   </body>
 </html>
