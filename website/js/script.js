@@ -1,4 +1,17 @@
 // Hero Background Carousel
+// Performance utility: debounce function to limit event handler calls
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
 class HeroCarousel {
   constructor() {
     this.slides = document.querySelectorAll('.hero-slide');
@@ -148,7 +161,7 @@ class UniquenessCarousel {
       this.resetAutoPlay();
     });
     
-    // Handle window resize
+    // Handle window resize - optimized with debounce
     let resizeTimeout;
     window.addEventListener('resize', () => {
       clearTimeout(resizeTimeout);
@@ -161,8 +174,8 @@ class UniquenessCarousel {
           this.createIndicators();
           this.updateCarousel();
         }
-      }, 250);
-    });
+      }, 150);
+    }, { passive: true });
     
     // Pause autoplay on hover
     this.track.addEventListener('mouseenter', () => this.pauseAutoPlay());
@@ -250,19 +263,26 @@ function setActiveNav() {
   });
 }
 
-window.addEventListener("scroll", setActiveNav);
+// Debounced version for better performance
+const debouncedSetActiveNav = debounce(setActiveNav, 100);
+window.addEventListener("scroll", debouncedSetActiveNav, { passive: true });
 
-// Intersection Observer for Animations
+// Intersection Observer for Animations - optimized for performance
 const observerOptions = {
-  threshold: 0.1,
-  rootMargin: "0px 0px -50px 0px",
+  threshold: 0.15,
+  rootMargin: "0px 0px -100px 0px",
 };
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
-      entry.target.style.opacity = "1";
-      entry.target.style.transform = "translateY(0)";
+      // Use requestAnimationFrame for smooth 60fps animations
+      requestAnimationFrame(() => {
+        entry.target.style.opacity = "1";
+        entry.target.style.transform = "translateY(0)";
+      });
+      // Stop observing after animation to improve performance
+      observer.unobserve(entry.target);
     }
   });
 }, observerOptions);
@@ -351,10 +371,16 @@ document.addEventListener('DOMContentLoaded', () => {
       overlay.classList.add('type-service');
       overlay.classList.add('show');
       overlay.setAttribute('aria-hidden', 'false');
-      // set image src after showing to allow transition
+      // set image src after showing to allow transition - use decode() for smoother rendering
       if (newSrc) {
         modalImage.src = newSrc;
-        modalImage.onload = () => { modalImage.style.opacity = '1'; };
+        modalImage.decode().then(() => {
+          requestAnimationFrame(() => {
+            modalImage.style.opacity = '1';
+          });
+        }).catch(() => {
+          modalImage.style.opacity = '1';
+        });
       } else {
         modalImage.style.opacity = '1';
       }
@@ -369,14 +395,18 @@ document.addEventListener('DOMContentLoaded', () => {
     infoEl.classList.add('fade-out');
     // after transition, swap content and fade-in
     setTimeout(() => {
-      // update image src with temporary opacity handling
+      // update image src with decode() for smooth rendering
       if (newSrc && modalImage.src !== newSrc) {
         modalImage.classList.remove('fade-out');
         modalImage.style.opacity = '0';
         modalImage.src = newSrc;
-        modalImage.onload = () => {
+        modalImage.decode().then(() => {
+          requestAnimationFrame(() => {
+            modalImage.style.opacity = '1';
+          });
+        }).catch(() => {
           modalImage.style.opacity = '1';
-        };
+        });
       }
       // apply new text and list
       applyContent();

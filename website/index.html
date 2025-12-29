@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>binQad Business Services LLC - UAE Business Solutions</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <!-- DNS Prefetch for external resources -->
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
     <link rel="stylesheet" href="css/style.css" />
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -20,13 +24,15 @@
       href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap"
       rel="stylesheet"
     />
+    <!-- Preload critical hero images -->
+    <link rel="preload" as="image" href="images/hero-1.jpg" fetchpriority="high" />
   </head>
   <body>
     <!-- Navigation -->
     <nav class="navbar">
       <div class="nav-container">
         <div class="nav-logo">
-          <img src="images/logo3.png" alt="binQad Business Services" />
+          <img src="images/logo3.png" alt="binQad Business Services" width="80" height="80" fetchpriority="high" />
         </div>
 
         <div class="nav-menu">
@@ -183,6 +189,7 @@
                     <img
                       src="images/unique-1.jpg"
                       alt="Complete Business Ecosystem"
+                      width="140" height="140"
                       loading="lazy" decoding="async"
                     />
                   </div>
@@ -202,6 +209,7 @@
                     <img
                       src="images/unique-2.jpg"
                       alt="Process-Driven Operations"
+                      width="140" height="140"
                       loading="lazy" decoding="async"
                     />
                   </div>
@@ -221,6 +229,7 @@
                     <img
                       src="images/unique-3.jpg"
                       alt="SLA-Based Service Delivery"
+                      width="140" height="140"
                       loading="lazy" decoding="async"
                     />
                   </div>
@@ -240,6 +249,7 @@
                     <img
                       src="images/unique-4.jpg"
                       alt="Strategic Business Advisory"
+                      width="140" height="140"
                       loading="lazy" decoding="async"
                     />
                   </div>
@@ -258,6 +268,7 @@
                     <img
                       src="images/unique-5.jpg"
                       alt="Compliance-First Culture"
+                      width="140" height="140"
                       loading="lazy" decoding="async"
                     />
                   </div>
@@ -276,6 +287,7 @@
                     <img
                       src="images/unique-6.jpg"
                       alt="Transparency by Design"
+                      width="140" height="140"
                       loading="lazy" decoding="async"
                     />
                   </div>
@@ -294,6 +306,7 @@
                     <img
                       src="images/unique-7.jpg"
                       alt="Long-term Partnerships"
+                      width="140" height="140"
                       loading="lazy" decoding="async"
                     />
                   </div>
@@ -323,7 +336,7 @@
         <div class="services-grid">
           <div class="service-card">
             <div class="service-image">
-              <img src="images/service-1.jpg" alt="UAE Business Setup" loading="lazy" decoding="async" />
+              <img src="images/service-1.jpg" alt="UAE Business Setup" width="400" height="300" loading="lazy" decoding="async" />
             </div>
             <h3>UAE Business Setup</h3>
             <ul>
@@ -338,7 +351,7 @@
 
           <div class="service-card">
             <div class="service-image">
-              <img src="images/service-2.jpg" alt="Visa & PRO" loading="lazy" decoding="async" />
+              <img src="images/service-2.jpg" alt="Visa & PRO" width="400" height="300" loading="lazy" decoding="async" />
             </div>
             <h3>Visa & PRO Services</h3>
             <ul>
@@ -356,6 +369,7 @@
               <img
                 src="images/service-3.jpg"
                 alt="Attestation & Legalisation"
+                width="400" height="300"
                 loading="lazy" decoding="async"
               />
             </div>
@@ -371,7 +385,7 @@
 
           <div class="service-card">
             <div class="service-image">
-              <img src="images/service-4.avif" alt="Accounting & Bookkeeping" loading="lazy" decoding="async" />
+              <img src="images/service-4.avif" alt="Accounting & Bookkeeping" width="400" height="300" loading="lazy" decoding="async" />
             </div>
             <h3>Accounting & Bookkeeping</h3>
             <ul>
@@ -387,6 +401,7 @@
               <img
                 src="images/service-5.webp"
                 alt="Tax Registration & Compliance"
+                width="400" height="300"
                 loading="lazy" decoding="async"
               />
             </div>
@@ -402,7 +417,7 @@
 
           <div class="service-card">
             <div class="service-image">
-              <img src="images/service-6.jpg" alt="HR Consulting & Payroll" loading="lazy" decoding="async" />
+              <img src="images/service-6.jpg" alt="HR Consulting & Payroll" width="400" height="300" loading="lazy" decoding="async" />
             </div>
             <h3>HR Consulting & Payroll</h3>
             <ul>
@@ -418,6 +433,7 @@
               <img
                 src="images/service-7.avif"
                 alt="Business Strategy & Optimization"
+                width="400" height="300"
                 loading="lazy" decoding="async"
               />
             </div>
@@ -436,6 +452,7 @@
               <img
                 src="images/service-8.jpeg"
                 alt="Corporate Support Services"
+                width="400" height="300"
                 loading="lazy" decoding="async"
               />
             </div>
@@ -527,7 +544,7 @@
           <div class="footer-section">
             <div class="footer-logo">
               <div class="nav-logo-footer">
-                <img src="images/logo3.png" alt="binQad Business Services" />
+                <img src="images/logo3.png" alt="binQad Business Services" width="80" height="80" loading="lazy" />
               </div>
 
             
@@ -605,7 +622,7 @@
         </button>
         <div class="modal-body">
           <div class="modal-image">
-            <img src="" alt="" id="service-modal-image" loading="lazy" decoding="async" />
+            <img src="" alt="" id="service-modal-image" width="500" height="375" loading="eager" decoding="async" />
           </div>
           <div class="modal-info">
             <h3 id="service-modal-title"></h3>
