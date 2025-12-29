@@ -614,3 +614,15 @@ function handleContactForm() {
 
 // Initialize contact form
 document.addEventListener('DOMContentLoaded', handleContactForm);
+
+// Set footer year dynamically to current year
+(function setFooterYear() {
+  try {
+    const el = document.getElementById('copyright-year');
+    if (!el) return;
+    const year = new Date().getFullYear();
+    el.textContent = String(year);
+  } catch (e) {
+    // silent
+  }
+})();
