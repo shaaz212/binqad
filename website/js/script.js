@@ -311,39 +311,78 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function openModalFromCard(card) {
-    // prevent duplicate opens and clear any pending reveals
-    clearRevealTimers();
+    // prepare content for modal; if modal already visible, update smoothly
     if (!overlay) return;
-    if (isModalOpen) {
-      closeModal();
-    }
+    clearRevealTimers();
+
     const img = card.querySelector('.service-image img');
     const titleEl = card.querySelector('h3');
-    const listItems = card.querySelectorAll('ul li');
+    const listItems = Array.from(card.querySelectorAll('ul li')).map(li => li.textContent);
+    const newSrc = img ? img.src : '';
+    const newAlt = titleEl ? titleEl.textContent : '';
+    const newTitle = titleEl ? titleEl.textContent : '';
 
-    modalImage.src = img ? img.src : '';
-    modalImage.alt = titleEl ? titleEl.textContent : '';
-    modalTitle.textContent = titleEl ? titleEl.textContent : '';
+    function applyContent() {
+      modalTitle.textContent = newTitle;
+      modalImage.alt = newAlt;
+      // replace list items
+      modalPoints.innerHTML = '';
+      listItems.forEach(text => {
+        const newLi = document.createElement('li');
+        newLi.textContent = text;
+        modalPoints.appendChild(newLi);
+      });
+      // reveal list items via small stagger using CSS class
+      Array.from(modalPoints.children).forEach((li, idx) => {
+        const t = setTimeout(() => li.classList.add('visible'), 120 + idx * 120);
+        revealTimers.push(t);
+      });
+    }
 
-    modalPoints.innerHTML = '';
-    listItems.forEach(li => {
-      const newLi = document.createElement('li');
-      newLi.textContent = li.textContent;
-      modalPoints.appendChild(newLi);
-    });
+    // If overlay isn't visible, show it and set content immediately
+    if (!overlay.classList.contains('show')) {
+      // set image opacity 0 then set src then fade in when loaded
+      modalImage.classList.remove('fade-out');
+      modalImage.classList.add('fade-in');
+      modalImage.style.opacity = '0';
+      applyContent();
+      overlay.classList.add('show');
+      overlay.setAttribute('aria-hidden', 'false');
+      // set image src after showing to allow transition
+      if (newSrc) {
+        modalImage.src = newSrc;
+        modalImage.onload = () => { modalImage.style.opacity = '1'; };
+      } else {
+        modalImage.style.opacity = '1';
+      }
+      isModalOpen = true;
+      return;
+    }
 
-    // show overlay
-    overlay.classList.add('show');
-    overlay.setAttribute('aria-hidden', 'false');
-
-    // reveal points one-by-one
-    const items = Array.from(modalPoints.children);
-    items.forEach((item, idx) => {
-      const t = setTimeout(() => {
-        item.classList.add('visible');
-      }, 250 * idx + 200); // cascade delay
-      revealTimers.push(t);
-    });
+    // If overlay already visible, smoothly replace content without hiding overlay
+    const infoEl = modal.querySelector('.modal-info');
+    // add fade-out classes
+    modalImage.classList.add('fade-out');
+    infoEl.classList.add('fade-out');
+    // after transition, swap content and fade-in
+    setTimeout(() => {
+      // update image src with temporary opacity handling
+      if (newSrc && modalImage.src !== newSrc) {
+        modalImage.classList.remove('fade-out');
+        modalImage.style.opacity = '0';
+        modalImage.src = newSrc;
+        modalImage.onload = () => {
+          modalImage.style.opacity = '1';
+        };
+      }
+      // apply new text and list
+      applyContent();
+      // fade-in info
+      infoEl.classList.remove('fade-out');
+      infoEl.classList.add('fade-in');
+      // cleanup fade-in class after short delay
+      setTimeout(() => infoEl.classList.remove('fade-in'), 300);
+    }, 200);
     isModalOpen = true;
   }
 
@@ -414,13 +453,53 @@ document.addEventListener('DOMContentLoaded', () => {
         modalPoints.appendChild(newLi);
       }
 
-      overlay.classList.add('show');
-      overlay.setAttribute('aria-hidden', 'false');
+      const newSrc = img ? img.src : '';
+      const newAlt = titleEl ? titleEl.textContent : '';
+      const newTitle = titleEl ? titleEl.textContent : '';
+      const txt = para ? para.textContent : '';
 
-      // reveal the single paragraph
-      const items = Array.from(modalPoints.children);
-      items.forEach((itemEl, idx) => {
-        const t = setTimeout(() => { itemEl.classList.add('visible'); }, 200 + idx * 250);
+      // reuse openModalFromCard style update to smoothly replace content
+      if (!overlay.classList.contains('show')) {
+        modalTitle.textContent = newTitle;
+        modalPoints.innerHTML = '';
+        if (txt) {
+          const newLi = document.createElement('li');
+          newLi.textContent = txt;
+          modalPoints.appendChild(newLi);
+        }
+        overlay.classList.add('show');
+        overlay.setAttribute('aria-hidden', 'false');
+        if (newSrc) {
+          modalImage.style.opacity = '0';
+          modalImage.src = newSrc;
+          modalImage.onload = () => modalImage.style.opacity = '1';
+        }
+      } else {
+        // animate replace
+        const infoEl = modal.querySelector('.modal-info');
+        modalImage.classList.add('fade-out');
+        infoEl.classList.add('fade-out');
+        setTimeout(() => {
+          modalTitle.textContent = newTitle;
+          modalPoints.innerHTML = '';
+          if (txt) {
+            const newLi = document.createElement('li');
+            newLi.textContent = txt;
+            modalPoints.appendChild(newLi);
+          }
+          if (newSrc && modalImage.src !== newSrc) {
+            modalImage.style.opacity = '0';
+            modalImage.src = newSrc;
+            modalImage.onload = () => modalImage.style.opacity = '1';
+          }
+          infoEl.classList.remove('fade-out');
+          infoEl.classList.add('fade-in');
+          setTimeout(() => infoEl.classList.remove('fade-in'), 300);
+        }, 200);
+      }
+      // reveal points
+      Array.from(modalPoints.children).forEach((li, idx) => {
+        const t = setTimeout(() => li.classList.add('visible'), 140 + idx * 140);
         revealTimers.push(t);
       });
       isModalOpen = true;
@@ -450,7 +529,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
     });
-    // Overlay clicks should not close the modal (close only via close button)
+    // Allow clicking outside the modal (on the overlay) to close the modal.
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        closeModal();
+        blockedCard = lastOpenedCard || lastHoveredCard;
+        blockedUntil = Date.now() + reopenBlockDuration;
+      }
+    });
 
     modalClose.addEventListener('click', () => {
       closeModal();
@@ -458,7 +544,7 @@ document.addEventListener('DOMContentLoaded', () => {
       blockedUntil = Date.now() + reopenBlockDuration;
     });
 
-    // Do NOT close on Escape key — require explicit close button click per requirements.
+    // Keep Escape disabled per previous requirement; explicit close via button or overlay only.
   }
 });
 
