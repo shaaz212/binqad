@@ -348,37 +348,52 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
     if (serviceCards && overlay && modal) {
-    // Detect if device supports hover (desktop/laptop) vs primarily touch (mobile/tablet)
+    // Detect hover capability and add robust hover handling to avoid flicker
     const isHoverCapable = window.matchMedia('(hover: hover)').matches;
     let closeTimeout;
+    let openTimeout;
+    let lastOpenedCard = null;
+    let lastHoveredCard = null;
+    let blockedCard = null;
+    let blockedUntil = 0;
+    const openDelay = 140; // ms before opening on hover (prevents accidental opens)
+    const reopenBlockDuration = 600; // ms to block immediate reopen after manual close
 
     serviceCards.forEach(card => {
       if (isHoverCapable) {
         card.addEventListener('mouseenter', () => {
           clearTimeout(closeTimeout);
-          openModalFromCard(card);
+          clearTimeout(openTimeout);
+          lastHoveredCard = card;
+          // If this card was recently closed by the user, don't reopen immediately
+          if (blockedCard === card && Date.now() < blockedUntil) return;
+          openTimeout = setTimeout(() => {
+            // If modal already open for this card, do nothing
+            if (lastOpenedCard === card && isModalOpen) return;
+            openModalFromCard(card);
+            lastOpenedCard = card;
+          }, openDelay);
         });
+
+        // DO NOT auto-close on mouseleave — modal should stay open until user clicks close
         card.addEventListener('mouseleave', () => {
-          closeTimeout = setTimeout(() => {
-            closeModal();
-          }, 300);
+          clearTimeout(openTimeout);
         });
       } else {
         // Touch devices: open on click
-        card.addEventListener('click', () => openModalFromCard(card));
+        card.addEventListener('click', () => {
+          openModalFromCard(card);
+          lastOpenedCard = card;
+        });
       }
     });
 
-    // Keep modal open when hovering over it
+    // Keep modal open: do not close on modal mouseleave or overlay click.
     if (isHoverCapable && modal) {
       modal.addEventListener('mouseenter', () => {
-        clearTimeout(closeTimeout);
+        clearTimeout(openTimeout);
       });
-      modal.addEventListener('mouseleave', () => {
-        closeTimeout = setTimeout(() => {
-          closeModal();
-        }, 300);
-      });
+      // Intentionally no mouseleave close handler — user must click close button.
     }
 
     // Make uniqueness items open the same modal with paragraph content
@@ -415,27 +430,35 @@ document.addEventListener('DOMContentLoaded', () => {
       if (isHoverCapable) {
         u.addEventListener('mouseenter', () => {
           clearTimeout(closeTimeout);
-          openModalFromUnique(u);
+          clearTimeout(openTimeout);
+          lastHoveredCard = u;
+          if (blockedCard === u && Date.now() < blockedUntil) return;
+          openTimeout = setTimeout(() => {
+            if (lastOpenedCard === u && isModalOpen) return;
+            openModalFromUnique(u);
+            lastOpenedCard = u;
+          }, openDelay);
         });
         u.addEventListener('mouseleave', () => {
-          closeTimeout = setTimeout(() => {
-            closeModal();
-          }, 300);
+          clearTimeout(openTimeout);
+          // Intentionally do not auto-close on mouseleave
         });
       } else {
-        u.addEventListener('click', () => openModalFromUnique(u));
+        u.addEventListener('click', () => {
+          openModalFromUnique(u);
+          lastOpenedCard = u;
+        });
       }
     });
+    // Overlay clicks should not close the modal (close only via close button)
 
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay || e.target === modalClose) closeModal();
+    modalClose.addEventListener('click', () => {
+      closeModal();
+      blockedCard = lastOpenedCard || lastHoveredCard;
+      blockedUntil = Date.now() + reopenBlockDuration;
     });
 
-    modalClose.addEventListener('click', closeModal);
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeModal();
-    });
+    // Do NOT close on Escape key — require explicit close button click per requirements.
   }
 });
 
