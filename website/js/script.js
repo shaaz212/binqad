@@ -346,6 +346,9 @@ document.addEventListener('DOMContentLoaded', () => {
       modalImage.classList.add('fade-in');
       modalImage.style.opacity = '0';
       applyContent();
+      // mark modal type as service when opened from a service card
+      overlay.classList.remove('type-unique');
+      overlay.classList.add('type-service');
       overlay.classList.add('show');
       overlay.setAttribute('aria-hidden', 'false');
       // set image src after showing to allow transition
@@ -377,6 +380,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       // apply new text and list
       applyContent();
+      // mark modal type as service when updating from a service card
+      overlay.classList.remove('type-unique');
+      overlay.classList.add('type-service');
       // fade-in info
       infoEl.classList.remove('fade-out');
       infoEl.classList.add('fade-in');
@@ -467,6 +473,9 @@ document.addEventListener('DOMContentLoaded', () => {
           newLi.textContent = txt;
           modalPoints.appendChild(newLi);
         }
+        // mark modal as unique type (paragraph style)
+        overlay.classList.remove('type-service');
+        overlay.classList.add('type-unique');
         overlay.classList.add('show');
         overlay.setAttribute('aria-hidden', 'false');
         if (newSrc) {
@@ -492,6 +501,9 @@ document.addEventListener('DOMContentLoaded', () => {
             modalImage.src = newSrc;
             modalImage.onload = () => modalImage.style.opacity = '1';
           }
+          // mark modal as unique type when updating
+          overlay.classList.remove('type-service');
+          overlay.classList.add('type-unique');
           infoEl.classList.remove('fade-out');
           infoEl.classList.add('fade-in');
           setTimeout(() => infoEl.classList.remove('fade-in'), 300);
