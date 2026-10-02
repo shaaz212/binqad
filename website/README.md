@@ -2,17 +2,18 @@
 
 ## Overview
 
-A professional, responsive static website for binQad Business Services LLC, a UAE-based business consultancy company. The website features a modern violet theme, smooth animations, and comprehensive information about the company's services.
+A professional, responsive static website for binQad Business Services LLC, a UAE-based business consultancy company. The website features a claret & black brand theme, smooth animations, and comprehensive information about the company's services.
 
 ## Features
 
 - **Responsive Design**: Fully responsive across all devices (mobile, tablet, desktop)
-- **Violet Theme**: Professional purple/violet color scheme
+- **Claret Theme**: Professional claret (#750f3b) and black colour scheme
 - **Modern Animations**: Smooth scroll animations, hover effects, and micro-interactions
 - **Mobile Navigation**: Responsive hamburger menu for mobile devices
-- **Contact Form**: Interactive contact form with validation
 - **Service Showcase**: Comprehensive display of all business services
 - **SEO Optimized**: Clean HTML structure with semantic markup
+- **Optimised Imagery**: Responsive AVIF/WebP/JPEG variants with lazy loading and placeholders
+- **Accessible**: Skip link, keyboard-operable dialogs, visible focus, WCAG AA text contrast
 
 ## Technologies Used
 
@@ -26,14 +27,25 @@ A professional, responsive static website for binQad Business Services LLC, a UA
 
 ```
 website/
-├── index.html          # Main HTML file
+├── index.html            # Main HTML file
 ├── css/
-│   └── style.css       # Main stylesheet with violet theme
+│   └── style.css         # Main stylesheet (claret theme, UTF-8)
 ├── js/
-│   └── script.js       # JavaScript for interactivity
-├── images/             # Directory for images (currently using CSS illustrations)
-└── README.md           # This file
+│   └── script.js         # JavaScript for interactivity
+├── images/
+│   ├── *.jpg / *.png     # Full-resolution source images (not served)
+│   └── optimized/        # Generated responsive variants — these are what the site loads
+│       ├── <name>-<width>.avif
+│       ├── <name>-<width>.webp
+│       ├── <name>-<width>.jpg
+│       └── manifest.json # Dimensions + average colour used for placeholders
+└── README.md             # This file
 ```
+
+> **Images:** `index.html` references `images/optimized/` only. The originals in
+> `images/` are kept as masters. If you add or replace a photo, regenerate the
+> variants (see *Image pipeline* below) rather than pointing the HTML at a
+> multi-megabyte original.
 
 ## Sections
 
@@ -78,16 +90,19 @@ website/
 
 ### Colors
 
-The violet theme can be customized by modifying the CSS variables in `style.css`:
+The claret theme can be customized by modifying the CSS variables in `style.css`:
 
 ```css
 :root {
-  --primary-violet: #7c3aed;
-  --secondary-violet: #a855f7;
-  --light-violet: #c4b5fd;
-  --dark-violet: #5b21b6;
+  --primary-claret: #750f3b;
+  --secondary-claret: #8b1538;
+  --light-claret: #a61e4d;
+  --dark-claret: #5c0b2e;
 }
 ```
+
+Spacing, radii, shadows and motion are also tokenised at the top of
+`style.css`, so most visual tweaks are a one-line change there.
 
 ### Content
 
@@ -97,10 +112,24 @@ The violet theme can be customized by modifying the CSS variables in `style.css`
 
 ## Performance Features
 
+- Responsive `<picture>` images: AVIF with WebP and JPEG fallbacks
+- Only the first hero frame is preloaded; every other image is lazy-loaded
+- Average-colour placeholders + reserved aspect ratios keep layout shift ~0
 - Optimized CSS with efficient animations
-- Minimal JavaScript for fast loading
-- Responsive images support (lazy loading ready)
-- Clean, semantic HTML structure
+- Minimal, dependency-free JavaScript
+
+Initial page load is roughly **0.5 MB** across 8 requests.
+
+## Image pipeline
+
+The served images in `images/optimized/` are generated from the masters in
+`images/`. Widths are 1280/1920/2560 for hero frames and 480/800/1200 for cards,
+each emitted as AVIF (q64), WebP (q86) and progressive JPEG (q85).
+
+To regenerate after changing a source image, run a script that resizes each
+master to those widths in all three formats and refreshes `manifest.json`
+(which stores each image's dimensions and average colour for the placeholder).
+Any tool works — ImageMagick, `sharp`, or Pillow.
 
 ## Contact Information
 
@@ -114,12 +143,11 @@ The violet theme can be customized by modifying the CSS variables in `style.css`
 - Google Fonts is used for typography
 - All animations are CSS-based for better performance
 - The design is optimized for UAE business environment
-- Contact form includes validation but requires backend integration for actual email sending
+- Service and differentiator cards open a details dialog (hover on desktop, tap on touch)
 
 ## Future Enhancements
 
-- Add business images to the images folder
-- Integrate with email service for contact form
+- Integrate with email service if a contact form is added
 - Add Google Analytics
 - Implement blog/news section
 - Add testimonials section

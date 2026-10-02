@@ -1,0 +1,41 @@
+{
+  "artboards": [
+    {
+      "file": "Main.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 1440,
+      "h": 5250,
+      "title": "Homepage — Desktop 1440",
+      "expand": "fit"
+    },
+    {
+      "file": "Mobile.dc.html",
+      "x": 1600,
+      "y": 0,
+      "w": 390,
+      "h": 6700,
+      "title": "Homepage — Mobile 390",
+      "expand": "fit"
+    }
+  ],
+  "annotations": [
+    {
+      "id": "brief",
+      "x": 0,
+      "y": -300,
+      "w": 700,
+      "text": "binQad homepage redesign — same brand system as the live site (claret #750f3b/#8b1538, Poppins + Comfortaa wordmark, 16px card radii, #16202e footer).\n\nWhat changed: hero is left-aligned and asymmetric instead of centred; the 12+/8/Dubai stats moved out of About into an overlapping trust bar; the seven differentiators lost their photos and became a varied numbered grid; the eight services became an icon-led 4-up grid; contact moved onto a claret band.\n\nAll copy, phone numbers and the address are lifted from the current site. No enquiry form was added — say the word if you want one."
+    },
+    {
+      "id": "note-mobile",
+      "x": 1600,
+      "y": -180,
+      "w": 390,
+      "text": "Same page at 390px. All tap targets are 44px or larger; no fake status bar or keyboard chrome."
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  }
+}

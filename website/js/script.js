@@ -1,658 +1,463 @@
-// Hero Background Carousel
-// Performance utility: debounce function to limit event handler calls
-function debounce(func, wait) {
-  let timeout;
-  return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
-}
+/* =============================================================================
+   binQad Business Services LLC — site behaviour
+   -----------------------------------------------------------------------------
+   Modules
+     1. media loading states      5. scroll reveal
+     2. navigation                6. details modal
+     3. hero carousel             7. footer year
+     4. active section link
+   ========================================================================== */
+(function () {
+  "use strict";
 
-class HeroCarousel {
-  constructor() {
-    this.slides = document.querySelectorAll('.hero-slide');
-    this.currentSlide = 0;
-    this.autoPlayInterval = null;
-    
-    if (this.slides.length > 0) {
-      this.init();
-    }
-  }
-  
-  init() {
-    this.startAutoPlay();
-  }
-  
-  nextSlide() {
-    this.slides[this.currentSlide].classList.remove('active');
-    this.currentSlide = (this.currentSlide + 1) % this.slides.length;
-    this.slides[this.currentSlide].classList.add('active');
-  }
-  
-  startAutoPlay() {
-    this.autoPlayInterval = setInterval(() => {
-      this.nextSlide();
-    }, 4000); // Change slide every 4 seconds
-  }
-  
-  stopAutoPlay() {
-    if (this.autoPlayInterval) {
-      clearInterval(this.autoPlayInterval);
-      this.autoPlayInterval = null;
-    }
-  }
-}
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var canHover = window.matchMedia("(hover: hover) and (pointer: fine)");
 
-// Uniqueness Carousel Functionality  
-class UniquenessCarousel {
-  constructor() {
-    this.track = document.getElementById('uniqueness-carousel-track');
-    this.prevBtn = document.getElementById('uniqueness-carousel-prev');
-    this.nextBtn = document.getElementById('uniqueness-carousel-next');
-    this.indicatorsContainer = document.getElementById('uniqueness-carousel-indicators');
-    
-    if (!this.track || !this.prevBtn || !this.nextBtn) {
-      console.error('Uniqueness carousel elements not found');
-      return;
-    }
-    
-    this.slides = Array.from(this.track.children);
-    this.currentIndex = 0;
-    this.slidesPerView = this.getSlidesPerView();
-    this.maxIndex = Math.max(0, this.slides.length - this.slidesPerView);
-    this.autoPlayInterval = null;
-    
-    this.init();
+  /* ---------------------------------------------------------------------------
+     1. Media loading states
+     Reveals each image once it has actually decoded, so the colour placeholder
+     and shimmer hand over cleanly instead of flashing an empty box.
+     ------------------------------------------------------------------------ */
+  function markLoaded(img) {
+    var box = img.closest(".media") || img.parentElement;
+    if (box) box.classList.add("is-loaded");
   }
-  
-  getSlidesPerView() {
-    // Dynamically calculate how many slides actually fit based on container and card width
-    if (!this.track || this.slides.length === 0) return 1;
-    
-    const container = this.track.parentElement;
-    if (!container) return 1;
-    
-    const containerWidth = container.offsetWidth;
-    const slideWidth = this.slides[0].offsetWidth;
-    const gap = 32; // 2rem gap between slides
-    
-    // Calculate how many complete slides fit
-    const slidesPerView = Math.floor((containerWidth + gap) / (slideWidth + gap));
-    return Math.max(1, slidesPerView);
-  }
-  
-  init() {
-    this.createIndicators();
-    this.updateCarousel();
-    this.bindEvents();
-    this.startAutoPlay();
-  }
-  
-  createIndicators() {
-    if (!this.indicatorsContainer) return;
-    this.indicatorsContainer.innerHTML = '';
-    const indicatorCount = this.maxIndex + 1;
-    
-    for (let i = 0; i < indicatorCount; i++) {
-      const indicator = document.createElement('div');
-      indicator.classList.add('carousel-indicator');
-      if (i === 0) indicator.classList.add('active');
-      indicator.addEventListener('click', () => this.goToSlide(i));
-      this.indicatorsContainer.appendChild(indicator);
-    }
-  }
-  
-  updateCarousel() {
-    if (!this.track || this.slides.length === 0) return;
-    const slideWidth = this.slides[0].offsetWidth + 32; // 32px for gap
-    const translateX = -this.currentIndex * slideWidth;
-    this.track.style.transform = `translateX(${translateX}px)`;
-    
-    // Infinite loop - buttons always enabled
-    
-    // Update indicators
-    document.querySelectorAll('#uniqueness-carousel-indicators .carousel-indicator').forEach((indicator, index) => {
-      indicator.classList.toggle('active', index === this.currentIndex);
-    });
-  }
-  
-  goToSlide(index) {
-    this.currentIndex = Math.max(0, Math.min(index, this.maxIndex));
-    this.updateCarousel();
-    this.resetAutoPlay();
-  }
-  
-  nextSlide() {
-    // Infinite loop: wrap to start when reaching end
-    if (this.currentIndex < this.maxIndex) {
-      this.currentIndex++;
-    } else {
-      this.currentIndex = 0;
-    }
-    this.updateCarousel();
-  }
-  
-  prevSlide() {
-    // Infinite loop: wrap to end when at start
-    if (this.currentIndex > 0) {
-      this.currentIndex--;
-    } else {
-      this.currentIndex = this.maxIndex;
-    }
-    this.updateCarousel();
-  }
-  
-  bindEvents() {
-    // Previous button
-    this.prevBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      this.prevSlide();
-      this.resetAutoPlay();
-    });
-    
-    // Next button
-    this.nextBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      this.nextSlide();
-      this.resetAutoPlay();
-    });
-    
-    // Handle window resize - optimized with debounce
-    let resizeTimeout;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(() => {
-        const newSlidesPerView = this.getSlidesPerView();
-        if (newSlidesPerView !== this.slidesPerView) {
-          this.slidesPerView = newSlidesPerView;
-          this.maxIndex = Math.max(0, this.slides.length - this.slidesPerView);
-          this.currentIndex = Math.min(this.currentIndex, this.maxIndex);
-          this.createIndicators();
-          this.updateCarousel();
-        }
-      }, 150);
-    }, { passive: true });
-    
-    // Pause autoplay on hover
-    this.track.addEventListener('mouseenter', () => this.pauseAutoPlay());
-    this.track.addEventListener('mouseleave', () => this.startAutoPlay());
-  }
-  
-  startAutoPlay() {
-    if (this.autoPlayInterval) {
-      clearInterval(this.autoPlayInterval);
-    }
-    this.autoPlayInterval = setInterval(() => {
-      if (this.currentIndex === this.maxIndex) {
-        this.goToSlide(0);
+
+  function initMediaLoading() {
+    document.querySelectorAll(".media img").forEach(function (img) {
+      if (img.complete && img.naturalWidth > 0) {
+        markLoaded(img);
       } else {
-        this.nextSlide();
+        img.addEventListener("load", function () { markLoaded(img); }, { once: true });
+        // A broken file should still clear the shimmer rather than spin forever
+        img.addEventListener("error", function () { markLoaded(img); }, { once: true });
       }
-    }, 5000); // 5 seconds for uniqueness carousel
-  }
-  
-  pauseAutoPlay() {
-    if (this.autoPlayInterval) {
-      clearInterval(this.autoPlayInterval);
-      this.autoPlayInterval = null;
-    }
-  }
-  
-  resetAutoPlay() {
-    this.pauseAutoPlay();
-    this.startAutoPlay();
-  }
-}
-
-// Mobile Navigation Toggle
-const mobileMenu = document.getElementById("mobile-menu");
-const navMenu = document.querySelector(".nav-menu");
-
-if (mobileMenu && navMenu) {
-  mobileMenu.addEventListener("click", () => {
-    mobileMenu.classList.toggle("active");
-    navMenu.classList.toggle("active");
-  });
-
-  // Close mobile menu when clicking on a nav link
-  document.querySelectorAll(".nav-link").forEach((link) => {
-    link.addEventListener("click", () => {
-      mobileMenu.classList.remove("active");
-      navMenu.classList.remove("active");
     });
-  });
-}
-
-// Smooth Scrolling for Navigation Links
-document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-  anchor.addEventListener("click", function (e) {
-    e.preventDefault();
-    const target = document.querySelector(this.getAttribute("href"));
-    if (target) {
-      const offsetTop = target.offsetTop - 80;
-      window.scrollTo({
-        top: offsetTop,
-        behavior: "smooth",
-      });
-    }
-  });
-});
-
-// Active Navigation Link
-const sections = document.querySelectorAll("section");
-const navLinks = document.querySelectorAll(".nav-link");
-
-function setActiveNav() {
-  let current = "";
-  sections.forEach((section) => {
-    const sectionTop = section.offsetTop;
-    if (window.pageYOffset >= sectionTop - 100) {
-      current = section.getAttribute("id");
-    }
-  });
-
-  navLinks.forEach((link) => {
-    link.classList.remove("active");
-    if (link.getAttribute("href") === "#" + current) {
-      link.classList.add("active");
-    }
-  });
-}
-
-// Debounced version for better performance
-const debouncedSetActiveNav = debounce(setActiveNav, 100);
-window.addEventListener("scroll", debouncedSetActiveNav, { passive: true });
-
-// Intersection Observer for Animations - optimized for performance
-const observerOptions = {
-  threshold: 0.15,
-  rootMargin: "0px 0px -100px 0px",
-};
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      // Use requestAnimationFrame for smooth 60fps animations
-      requestAnimationFrame(() => {
-        entry.target.style.opacity = "1";
-        entry.target.style.transform = "translateY(0)";
-      });
-      // Stop observing after animation to improve performance
-      observer.unobserve(entry.target);
-    }
-  });
-}, observerOptions);
-
-// Observe elements with fadeInUp animation
-document.addEventListener("DOMContentLoaded", () => {
-  const elements = document.querySelectorAll(".unique-item, .service-card, .contact-item-pro");
-  elements.forEach((el) => {
-    el.style.opacity = "0";
-    el.style.transform = "translateY(30px)";
-    el.style.transition = "opacity 0.6s ease, transform 0.6s ease";
-    observer.observe(el);
-  });
-
-  // Initialize carousels
-  new HeroCarousel();
-  // uniqueness carousel removed per design; items will be static and clickable
-});
-
-// Service card modal: open popup and reveal points one by one
-document.addEventListener('DOMContentLoaded', () => {
-  const serviceCards = document.querySelectorAll('.service-card');
-  const overlay = document.getElementById('service-modal-overlay');
-  const modal = document.getElementById('service-modal');
-  const modalImage = document.getElementById('service-modal-image');
-  const modalTitle = document.getElementById('service-modal-title');
-  const modalPoints = document.getElementById('service-modal-points');
-  const modalClose = document.getElementById('service-modal-close');
-  let revealTimers = [];
-  let isModalOpen = false;
-
-  function clearRevealTimers() {
-    revealTimers.forEach(t => clearTimeout(t));
-    revealTimers = [];
   }
 
-  function closeModal() {
-    if (!overlay) return;
-    overlay.classList.remove('show');
-    overlay.setAttribute('aria-hidden', 'true');
-    modalPoints.innerHTML = '';
-    modalImage.src = '';
-    modalTitle.textContent = '';
-    clearRevealTimers();
-    isModalOpen = false;
-  }
+  /* ---------------------------------------------------------------------------
+     2. Navigation — drawer, backdrop, scroll lock, elevation on scroll
+     ------------------------------------------------------------------------ */
+  function initNav() {
+    var toggle = document.getElementById("mobile-menu");
+    var menu = document.getElementById("nav-menu");
+    var backdrop = document.getElementById("nav-backdrop");
+    var navbar = document.getElementById("navbar");
+    if (!toggle || !menu) return;
 
-  function openModalFromCard(card) {
-    // prepare content for modal; if modal already visible, update smoothly
-    if (!overlay) return;
-    clearRevealTimers();
-
-    const img = card.querySelector('.service-image img');
-    const titleEl = card.querySelector('h3');
-    const listItems = Array.from(card.querySelectorAll('ul li')).map(li => li.textContent);
-    const newSrc = img ? img.src : '';
-    const newAlt = titleEl ? titleEl.textContent : '';
-    const newTitle = titleEl ? titleEl.textContent : '';
-
-    function applyContent() {
-      modalTitle.textContent = newTitle;
-      modalImage.alt = newAlt;
-      // replace list items
-      modalPoints.innerHTML = '';
-      listItems.forEach(text => {
-        const newLi = document.createElement('li');
-        newLi.textContent = text;
-        modalPoints.appendChild(newLi);
-      });
-      // reveal list items via small stagger using CSS class
-      Array.from(modalPoints.children).forEach((li, idx) => {
-        const t = setTimeout(() => li.classList.add('visible'), 120 + idx * 120);
-        revealTimers.push(t);
-      });
-    }
-
-    // If overlay isn't visible, show it and set content immediately
-    if (!overlay.classList.contains('show')) {
-      // set image opacity 0 then set src then fade in when loaded
-      modalImage.classList.remove('fade-out');
-      modalImage.classList.add('fade-in');
-      modalImage.style.opacity = '0';
-      applyContent();
-      // mark modal type as service when opened from a service card
-      overlay.classList.remove('type-unique');
-      overlay.classList.add('type-service');
-      overlay.classList.add('show');
-      overlay.setAttribute('aria-hidden', 'false');
-      // set image src after showing to allow transition - use decode() for smoother rendering
-      if (newSrc) {
-        modalImage.src = newSrc;
-        modalImage.decode().then(() => {
-          requestAnimationFrame(() => {
-            modalImage.style.opacity = '1';
-          });
-        }).catch(() => {
-          modalImage.style.opacity = '1';
+    function setMenu(open) {
+      toggle.classList.toggle("active", open);
+      menu.classList.toggle("active", open);
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", open ? "Close navigation menu" : "Open navigation menu");
+      document.body.classList.toggle("is-locked", open);
+      if (backdrop) {
+        backdrop.hidden = !open;
+        // let `hidden` clear before transitioning opacity
+        requestAnimationFrame(function () {
+          backdrop.classList.toggle("is-open", open);
         });
-      } else {
-        modalImage.style.opacity = '1';
       }
-      isModalOpen = true;
+    }
+
+    toggle.addEventListener("click", function () {
+      setMenu(!menu.classList.contains("active"));
+    });
+
+    if (backdrop) backdrop.addEventListener("click", function () { setMenu(false); });
+
+    // Anchor scrolling is handled natively via scroll-padding-top; just close up.
+    menu.querySelectorAll(".nav-link, .login-btn").forEach(function (link) {
+      link.addEventListener("click", function () { setMenu(false); });
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && menu.classList.contains("active")) {
+        setMenu(false);
+        toggle.focus();
+      }
+    });
+
+    // Reset the drawer if the viewport grows past the mobile breakpoint
+    var desktop = window.matchMedia("(min-width: 969px)");
+    desktop.addEventListener("change", function (e) {
+      if (e.matches) setMenu(false);
+    });
+
+    if (navbar) {
+      var onScroll = function () {
+        navbar.classList.toggle("is-scrolled", window.scrollY > 8);
+      };
+      onScroll();
+      window.addEventListener("scroll", onScroll, { passive: true });
+    }
+  }
+
+  /* ---------------------------------------------------------------------------
+     3. Hero carousel — cross-fades the four background frames
+     ------------------------------------------------------------------------ */
+  function initHero() {
+    var slides = Array.prototype.slice.call(document.querySelectorAll(".hero-slide"));
+    var dots = Array.prototype.slice.call(document.querySelectorAll(".hero-dot"));
+    if (slides.length < 2) return;
+
+    var index = 0;
+    var timer = null;
+    var DELAY = 6000;
+
+    function show(next) {
+      if (next === index) return;
+      slides[index].classList.remove("is-active");
+      slides[next].classList.add("is-active");
+      if (dots[index]) {
+        dots[index].classList.remove("is-active");
+        dots[index].setAttribute("aria-current", "false");
+      }
+      if (dots[next]) {
+        dots[next].classList.add("is-active");
+        dots[next].setAttribute("aria-current", "true");
+      }
+      index = next;
+    }
+
+    function start() {
+      if (timer || reduceMotion.matches) return;
+      timer = setInterval(function () {
+        show((index + 1) % slides.length);
+      }, DELAY);
+    }
+
+    function stop() {
+      if (timer) { clearInterval(timer); timer = null; }
+    }
+
+    dots.forEach(function (dot, i) {
+      dot.addEventListener("click", function () {
+        show(i);
+        stop();
+        start();
+      });
+    });
+
+    // Don't animate against a hidden tab, and honour reduced-motion changes
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) stop(); else start();
+    });
+    reduceMotion.addEventListener("change", function (e) {
+      if (e.matches) stop(); else start();
+    });
+
+    start();
+  }
+
+  /* ---------------------------------------------------------------------------
+     4. Active section link
+     ------------------------------------------------------------------------ */
+  function initActiveNav() {
+    var links = Array.prototype.slice.call(document.querySelectorAll(".nav-menu .nav-link"));
+    var sections = links
+      .map(function (l) { return document.querySelector(l.getAttribute("href")); })
+      .filter(Boolean);
+    if (!sections.length) return;
+
+    var visible = new Map();
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        visible.set(entry.target.id, entry.isIntersecting ? entry.intersectionRatio : 0);
+      });
+
+      var bestId = null;
+      var bestRatio = 0;
+      visible.forEach(function (ratio, id) {
+        if (ratio > bestRatio) { bestRatio = ratio; bestId = id; }
+      });
+
+      links.forEach(function (link) {
+        link.classList.toggle("active", link.getAttribute("href") === "#" + bestId);
+      });
+    }, {
+      // Discount the fixed header when deciding which section is "current"
+      rootMargin: "-88px 0px -55% 0px",
+      threshold: [0, 0.25, 0.5, 0.75, 1]
+    });
+
+    sections.forEach(function (s) { observer.observe(s); });
+  }
+
+  /* ---------------------------------------------------------------------------
+     5. Scroll reveal
+     ------------------------------------------------------------------------ */
+  function initReveal() {
+    var targets = document.querySelectorAll(
+      ".unique-item, .service-card, .contact-item-pro, .mission, .vision, .about-stats"
+    );
+    if (!targets.length) return;
+
+    if (reduceMotion.matches || !("IntersectionObserver" in window)) {
+      targets.forEach(function (el) { el.classList.add("is-visible"); });
       return;
     }
 
-    // If overlay already visible, smoothly replace content without hiding overlay
-    const infoEl = modal.querySelector('.modal-info');
-    // add fade-out classes
-    modalImage.classList.add('fade-out');
-    infoEl.classList.add('fade-out');
-    // after transition, swap content and fade-in
-    setTimeout(() => {
-      // update image src with decode() for smooth rendering
-      if (newSrc && modalImage.src !== newSrc) {
-        modalImage.classList.remove('fade-out');
-        modalImage.style.opacity = '0';
-        modalImage.src = newSrc;
-        modalImage.decode().then(() => {
-          requestAnimationFrame(() => {
-            modalImage.style.opacity = '1';
-          });
-        }).catch(() => {
-          modalImage.style.opacity = '1';
-        });
-      }
-      // apply new text and list
-      applyContent();
-      // mark modal type as service when updating from a service card
-      overlay.classList.remove('type-unique');
-      overlay.classList.add('type-service');
-      // fade-in info
-      infoEl.classList.remove('fade-out');
-      infoEl.classList.add('fade-in');
-      // cleanup fade-in class after short delay
-      setTimeout(() => infoEl.classList.remove('fade-in'), 300);
-    }, 200);
-    isModalOpen = true;
-  }
-
-    if (serviceCards && overlay && modal) {
-    // Detect hover capability and add robust hover handling to avoid flicker
-    const isHoverCapable = window.matchMedia('(hover: hover)').matches;
-    let closeTimeout;
-    let openTimeout;
-    let lastOpenedCard = null;
-    let lastHoveredCard = null;
-    let blockedCard = null;
-    let blockedUntil = 0;
-    const openDelay = 140; // ms before opening on hover (prevents accidental opens)
-    const reopenBlockDuration = 600; // ms to block immediate reopen after manual close
-
-    serviceCards.forEach(card => {
-      if (isHoverCapable) {
-        card.addEventListener('mouseenter', () => {
-          clearTimeout(closeTimeout);
-          clearTimeout(openTimeout);
-          lastHoveredCard = card;
-          // If this card was recently closed by the user, don't reopen immediately
-          if (blockedCard === card && Date.now() < blockedUntil) return;
-          openTimeout = setTimeout(() => {
-            // If modal already open for this card, do nothing
-            if (lastOpenedCard === card && isModalOpen) return;
-            openModalFromCard(card);
-            lastOpenedCard = card;
-          }, openDelay);
-        });
-
-        // DO NOT auto-close on mouseleave — modal should stay open until user clicks close
-        card.addEventListener('mouseleave', () => {
-          clearTimeout(openTimeout);
-        });
-      } else {
-        // Touch devices: open on click
-        card.addEventListener('click', () => {
-          openModalFromCard(card);
-          lastOpenedCard = card;
-        });
-      }
-    });
-
-    // Keep modal open: do not close on modal mouseleave or overlay click.
-    if (isHoverCapable && modal) {
-      modal.addEventListener('mouseenter', () => {
-        clearTimeout(openTimeout);
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
       });
-      // Intentionally no mouseleave close handler — user must click close button.
+    }, { threshold: 0.12, rootMargin: "0px 0px -60px 0px" });
+
+    targets.forEach(function (el, i) {
+      el.classList.add("reveal");
+      // Small stagger within a row, capped so nothing lags far behind
+      el.style.transitionDelay = (i % 4) * 70 + "ms";
+      observer.observe(el);
+    });
+  }
+
+  /* ---------------------------------------------------------------------------
+     6. Details modal — shared by service cards and differentiator cards
+     ------------------------------------------------------------------------ */
+  function initModal() {
+    var overlay = document.getElementById("service-modal-overlay");
+    var modal = document.getElementById("service-modal");
+    var image = document.getElementById("service-modal-image");
+    var title = document.getElementById("service-modal-title");
+    var points = document.getElementById("service-modal-points");
+    var closeBtn = document.getElementById("service-modal-close");
+    if (!overlay || !modal || !image || !title || !points || !closeBtn) return;
+
+    var imageBox = image.closest(".media");
+    var info = modal.querySelector(".modal-info");
+    var timers = [];
+    var isOpen = false;
+    var lastTrigger = null;
+    var blockedCard = null;
+    var blockedUntil = 0;
+    var openTimer = null;
+    var OPEN_DELAY = 140;
+    var REOPEN_BLOCK = 600;
+
+    function clearTimers() {
+      timers.forEach(clearTimeout);
+      timers = [];
     }
 
-    // Make uniqueness items open the same modal with paragraph content
-    const uniqueItems = document.querySelectorAll('.unique-item');
-    function openModalFromUnique(item) {
-      const img = item.querySelector('.unique-image img');
-      const titleEl = item.querySelector('.unique-content h3');
-      const para = item.querySelector('.unique-content p');
-
-      modalImage.src = img ? img.src : '';
-      modalImage.alt = titleEl ? titleEl.textContent : '';
-      modalTitle.textContent = titleEl ? titleEl.textContent : '';
-
-      modalPoints.innerHTML = '';
-      if (para) {
-        const newLi = document.createElement('li');
-        newLi.textContent = para.textContent;
-        modalPoints.appendChild(newLi);
-      }
-
-      const newSrc = img ? img.src : '';
-      const newAlt = titleEl ? titleEl.textContent : '';
-      const newTitle = titleEl ? titleEl.textContent : '';
-      const txt = para ? para.textContent : '';
-
-      // reuse openModalFromCard style update to smoothly replace content
-      if (!overlay.classList.contains('show')) {
-        modalTitle.textContent = newTitle;
-        modalPoints.innerHTML = '';
-        if (txt) {
-          const newLi = document.createElement('li');
-          newLi.textContent = txt;
-          modalPoints.appendChild(newLi);
-        }
-        // mark modal as unique type (paragraph style)
-        overlay.classList.remove('type-service');
-        overlay.classList.add('type-unique');
-        overlay.classList.add('show');
-        overlay.setAttribute('aria-hidden', 'false');
-        if (newSrc) {
-          modalImage.style.opacity = '0';
-          modalImage.src = newSrc;
-          modalImage.onload = () => modalImage.style.opacity = '1';
-        }
-      } else {
-        // animate replace
-        const infoEl = modal.querySelector('.modal-info');
-        modalImage.classList.add('fade-out');
-        infoEl.classList.add('fade-out');
-        setTimeout(() => {
-          modalTitle.textContent = newTitle;
-          modalPoints.innerHTML = '';
-          if (txt) {
-            const newLi = document.createElement('li');
-            newLi.textContent = txt;
-            modalPoints.appendChild(newLi);
-          }
-          if (newSrc && modalImage.src !== newSrc) {
-            modalImage.style.opacity = '0';
-            modalImage.src = newSrc;
-            modalImage.onload = () => modalImage.style.opacity = '1';
-          }
-          // mark modal as unique type when updating
-          overlay.classList.remove('type-service');
-          overlay.classList.add('type-unique');
-          infoEl.classList.remove('fade-out');
-          infoEl.classList.add('fade-in');
-          setTimeout(() => infoEl.classList.remove('fade-in'), 300);
-        }, 200);
-      }
-      // reveal points
-      Array.from(modalPoints.children).forEach((li, idx) => {
-        const t = setTimeout(() => li.classList.add('visible'), 140 + idx * 140);
-        revealTimers.push(t);
+    function revealPoints() {
+      Array.prototype.slice.call(points.children).forEach(function (li, i) {
+        timers.push(setTimeout(function () { li.classList.add("visible"); }, 120 + i * 110));
       });
-      isModalOpen = true;
     }
 
-    uniqueItems.forEach(u => {
-      if (isHoverCapable) {
-        u.addEventListener('mouseenter', () => {
-          clearTimeout(closeTimeout);
-          clearTimeout(openTimeout);
-          lastHoveredCard = u;
-          if (blockedCard === u && Date.now() < blockedUntil) return;
-          openTimeout = setTimeout(() => {
-            if (lastOpenedCard === u && isModalOpen) return;
-            openModalFromUnique(u);
-            lastOpenedCard = u;
-          }, openDelay);
+    /* Mirror the card's own <picture> sources into the dialog so the browser
+       picks the same modern format, sized for the larger modal slot. Widths the
+       card already fetched stay warm in cache. */
+    var MODAL_SIZES = "(min-width: 820px) 420px, calc(100vw - 6rem)";
+
+    function setImage(card, alt) {
+      var cardImg = card.querySelector("img");
+      var cardPic = card.querySelector("picture");
+      if (!cardImg) return;
+
+      var box = card.querySelector(".media");
+      if (imageBox && box) {
+        imageBox.style.setProperty("--ph", getComputedStyle(box).getPropertyValue("--ph"));
+      }
+
+      var src = cardImg.getAttribute("src") || "";
+      if (image.getAttribute("src") === src) {
+        if (imageBox) imageBox.classList.add("is-loaded");
+        image.alt = alt;
+        return;
+      }
+
+      if (imageBox) imageBox.classList.remove("is-loaded");
+
+      if (cardPic) {
+        ["avif", "webp"].forEach(function (fmt) {
+          var target = document.getElementById("service-modal-" + fmt);
+          var origin = cardPic.querySelector('source[type="image/' + fmt + '"]');
+          if (!target) return;
+          if (origin && origin.getAttribute("srcset")) {
+            target.setAttribute("srcset", origin.getAttribute("srcset"));
+            target.setAttribute("sizes", MODAL_SIZES);
+          } else {
+            target.removeAttribute("srcset");
+          }
         });
-        u.addEventListener('mouseleave', () => {
-          clearTimeout(openTimeout);
-          // Intentionally do not auto-close on mouseleave
-        });
+      }
+
+      image.alt = alt;
+      image.setAttribute("sizes", MODAL_SIZES);
+      var cardSrcset = cardImg.getAttribute("srcset");
+      if (cardSrcset) image.setAttribute("srcset", cardSrcset);
+      else image.removeAttribute("srcset");
+      image.setAttribute("src", src);
+
+      var done = function () { if (imageBox) imageBox.classList.add("is-loaded"); };
+      if (image.decode) image.decode().then(done).catch(done);
+      else image.addEventListener("load", done, { once: true });
+    }
+
+    function fill(card, type) {
+      var heading = card.querySelector("h3");
+      var text = heading ? heading.textContent.trim() : "";
+      title.textContent = text;
+
+      points.innerHTML = "";
+      var lines;
+      if (type === "unique") {
+        var desc = card.querySelector(".unique-desc");
+        lines = desc ? [desc.textContent.trim()] : [];
       } else {
-        u.addEventListener('click', () => {
-          openModalFromUnique(u);
-          lastOpenedCard = u;
+        lines = Array.prototype.map.call(card.querySelectorAll("ul li"), function (li) {
+          return li.textContent.trim();
         });
       }
+      lines.forEach(function (line) {
+        var li = document.createElement("li");
+        li.textContent = line;
+        points.appendChild(li);
+      });
+
+      overlay.classList.toggle("type-unique", type === "unique");
+      overlay.classList.toggle("type-service", type !== "unique");
+      setImage(card, text);
+      revealPoints();
+    }
+
+    function open(card, type) {
+      clearTimers();
+
+      if (!isOpen) {
+        lastTrigger = card;
+        fill(card, type);
+        overlay.classList.add("show");
+        overlay.setAttribute("aria-hidden", "false");
+        document.body.classList.add("is-locked");
+        isOpen = true;
+        closeBtn.focus({ preventScroll: true });
+        return;
+      }
+
+      // Already open: cross-fade the contents rather than flashing the overlay
+      lastTrigger = card;
+      image.classList.add("fade-out");
+      if (info) info.classList.add("fade-out");
+      timers.push(setTimeout(function () {
+        fill(card, type);
+        image.classList.remove("fade-out");
+        if (info) {
+          info.classList.remove("fade-out");
+          info.classList.add("fade-in");
+          timers.push(setTimeout(function () { info.classList.remove("fade-in"); }, 300));
+        }
+      }, 200));
+    }
+
+    function close() {
+      if (!isOpen) return;
+      overlay.classList.remove("show");
+      overlay.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("is-locked");
+      clearTimers();
+      points.innerHTML = "";
+      title.textContent = "";
+      isOpen = false;
+      blockedCard = lastTrigger;
+      blockedUntil = Date.now() + REOPEN_BLOCK;
+      if (lastTrigger && typeof lastTrigger.focus === "function") {
+        lastTrigger.focus({ preventScroll: true });
+      }
+    }
+
+    function bind(card, type) {
+      var trigger = function () { open(card, type); };
+
+      card.addEventListener("click", trigger);
+      card.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          trigger();
+        }
+      });
+
+      if (!canHover.matches) return;
+
+      card.addEventListener("mouseenter", function () {
+        clearTimeout(openTimer);
+        if (blockedCard === card && Date.now() < blockedUntil) return;
+        openTimer = setTimeout(function () {
+          if (lastTrigger === card && isOpen) return;
+          trigger();
+        }, OPEN_DELAY);
+      });
+
+      // Deliberately no close-on-mouseleave: the dialog stays until dismissed.
+      card.addEventListener("mouseleave", function () { clearTimeout(openTimer); });
+    }
+
+    document.querySelectorAll(".service-card").forEach(function (c) { bind(c, "service"); });
+    document.querySelectorAll(".unique-item").forEach(function (c) { bind(c, "unique"); });
+
+    if (canHover.matches) {
+      modal.addEventListener("mouseenter", function () { clearTimeout(openTimer); });
+    }
+
+    overlay.addEventListener("click", function (e) {
+      if (e.target === overlay) close();
     });
-    // Allow clicking outside the modal (on the overlay) to close the modal.
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) {
-        closeModal();
-        blockedCard = lastOpenedCard || lastHoveredCard;
-        blockedUntil = Date.now() + reopenBlockDuration;
+    closeBtn.addEventListener("click", close);
+
+    document.addEventListener("keydown", function (e) {
+      if (!isOpen) return;
+
+      if (e.key === "Escape") {
+        e.preventDefault();
+        close();
+        return;
+      }
+
+      // Keep focus inside the dialog while it is open
+      if (e.key !== "Tab") return;
+      var focusables = modal.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (!focusables.length) return;
+      var first = focusables[0];
+      var last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
       }
     });
-
-    modalClose.addEventListener('click', () => {
-      closeModal();
-      blockedCard = lastOpenedCard || lastHoveredCard;
-      blockedUntil = Date.now() + reopenBlockDuration;
-    });
-
-    // Keep Escape disabled per previous requirement; explicit close via button or overlay only.
   }
-});
 
-// Handle floating cards animation
-window.addEventListener('load', () => {
-  const floatingCards = document.querySelectorAll('.floating-card');
-  floatingCards.forEach((card, index) => {
-    setTimeout(() => {
-      card.style.opacity = '1';
-      card.style.transform = 'translateY(0)';
-    }, 500 + (index * 200));
-  });
-});
-
-// Contact form enhancement (if you add a form later)
-
-// Back-to-top button: show on scroll and smooth-scroll to top
-document.addEventListener('DOMContentLoaded', () => {
-  const backBtn = document.getElementById('back-to-top');
-  if (!backBtn) return;
-
-  const toggleBackBtn = () => {
-    if (window.scrollY > 320) {
-      backBtn.classList.add('show');
-    } else {
-      backBtn.classList.remove('show');
-    }
-  };
-
-  // initial state
-  toggleBackBtn();
-
-  window.addEventListener('scroll', toggleBackBtn, { passive: true });
-
-  backBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  // allow keyboard activation
-  backBtn.addEventListener('keyup', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') backBtn.click();
-  });
-});
-function handleContactForm() {
-  const form = document.querySelector('.contact-form');
-  if (form) {
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      // Add your form submission logic here
-      console.log('Form submitted');
-    });
+  /* ---------------------------------------------------------------------------
+     7. Footer year
+     ------------------------------------------------------------------------ */
+  function initFooterYear() {
+    var el = document.getElementById("copyright-year");
+    if (el) el.textContent = String(new Date().getFullYear());
   }
-}
 
-// Initialize contact form
-document.addEventListener('DOMContentLoaded', handleContactForm);
+  /* ------------------------------------------------------------------------ */
+  function init() {
+    initMediaLoading();
+    initNav();
+    initHero();
+    initActiveNav();
+    initReveal();
+    initModal();
+    initFooterYear();
+  }
 
-// Set footer year dynamically to current year
-(function setFooterYear() {
-  try {
-    const el = document.getElementById('copyright-year');
-    if (!el) return;
-    const year = new Date().getFullYear();
-    el.textContent = String(year);
-  } catch (e) {
-    // silent
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
   }
 })();

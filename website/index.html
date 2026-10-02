@@ -4,151 +4,200 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>binQad Business Services LLC - UAE Business Solutions</title>
+    <meta name="description" content="binQad Business Services LLC is a Dubai-based consultancy delivering business setup, visa &amp; PRO, tax, accounting, HR and corporate support services across the UAE." />
+    <meta name="theme-color" content="#750f3b" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-    <!-- DNS Prefetch for external resources -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+
     <link rel="stylesheet" href="css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;family=Comfortaa:wght@700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome is decorative only: load it without blocking first paint -->
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <noscript>
+      <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        rel="stylesheet"
+      />
+    </noscript>
+
+    <!-- Preload only the first hero frame; slides 2-4 load after first paint -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      as="image"
+      href="images/optimized/hero-1-1920.avif"
+      imagesrcset="images/optimized/hero-1-1280.avif 1280w, images/optimized/hero-1-1920.avif 1920w, images/optimized/hero-1-2560.avif 2560w"
+      imagesizes="100vw"
+      type="image/avif"
+      fetchpriority="high"
     />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap"
-      rel="stylesheet"
-    />
-    <!-- Preload critical hero images -->
-    <link rel="preload" as="image" href="images/hero-1.jpg" fetchpriority="high" />
   </head>
   <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-      <div class="nav-container">
-        <div class="nav-logo">
-          <img src="images/logo3.png" alt="binQad Business Services" width="80" height="80" fetchpriority="high" />
-        </div>
+    <a href="#main" class="skip-link">Skip to main content</a>
 
-        <div class="nav-menu">
+    <!-- Navigation -->
+    <header class="navbar" id="navbar">
+      <nav class="nav-container" aria-label="Primary">
+        <a href="#home" class="nav-logo" aria-label="binQad Business Services - home">
+          <picture>
+            <source type="image/webp" srcset="images/optimized/logo3-200.webp 200w, images/optimized/logo3-400.webp 400w" sizes="132px" />
+            <img src="images/optimized/logo3-200.png" srcset="images/optimized/logo3-200.png 200w, images/optimized/logo3-400.png 400w"
+                 sizes="132px" width="200" height="76"
+                 alt="binQad Business Services" fetchpriority="high" decoding="async" />
+          </picture>
+        </a>
+
+        <div class="nav-menu" id="nav-menu">
           <a href="#home" class="nav-link">Home</a>
           <a href="#about" class="nav-link">About</a>
-          <a href="#uniqueness" class="nav-link"
-            >Why <span class="brand">binQad</span></a
-          >
+          <a href="#uniqueness" class="nav-link">Why <span class="brand">binQad</span></a>
           <a href="#services" class="nav-link">Services</a>
           <a href="#contact" class="nav-link">Contact</a>
           <div class="nav-actions mobile-only">
-            <a
-              href="https://binqad.bitrix24.com"
-              class="nav-link login-btn"
-              target="_blank"
-              >Login</a
-            >
+            <a href="https://binqad.bitrix24.com" class="login-btn" target="_blank" rel="noopener">Login</a>
           </div>
         </div>
-        <div class="nav-actions">
-          <a
-            href="https://binqad.bitrix24.com"
-            class="nav-link login-btn"
-            target="_blank"
-            >Login</a
-          >
+
+        <div class="nav-actions desktop-only">
+          <a href="https://binqad.bitrix24.com" class="login-btn" target="_blank" rel="noopener">Login</a>
         </div>
-        <div class="nav-toggle" id="mobile-menu">
+
+        <button
+          class="nav-toggle"
+          id="mobile-menu"
+          type="button"
+          aria-label="Open navigation menu"
+          aria-expanded="false"
+          aria-controls="nav-menu"
+        >
           <span class="bar"></span>
           <span class="bar"></span>
           <span class="bar"></span>
-        </div>
-      </div>
-    </nav>
+        </button>
+      </nav>
+    </header>
+    <div class="nav-backdrop" id="nav-backdrop" hidden></div>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-      <div class="hero-background">
-        <div class="hero-slide active"></div>
-        <div class="hero-slide"></div>
-        <div class="hero-slide"></div>
-        <div class="hero-slide"></div>
-      </div>
-      <div class="hero-overlay"></div>
-      <div class="hero-content">
-        <div class="hero-text">
-          <h1>Building Successful Enterprises in the UAE</h1>
-          <p>
-            Complete business solutions with over 12 years of expertise. From
-            setup to scale - we handle it all.
-          </p>
-          <!-- <div class="hero-buttons">
-            <button
-              class="btn-primary"
-              onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})"
-            >
-              Get Started
-            </button>
-            <button
-              class="btn-secondary"
-              onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'})"
-            >
-              Learn More
-            </button>
-          </div> -->
+    <main id="main">
+      <!-- Hero -->
+      <section id="home" class="hero" aria-label="Introduction">
+        <div class="hero-background" aria-hidden="true">
+        <div class="hero-slide is-active" style="--ph:#9b9996">
+          <picture>
+            <source type="image/avif" srcset="images/optimized/hero-1-1280.avif 1280w, images/optimized/hero-1-1920.avif 1920w, images/optimized/hero-1-2560.avif 2560w" sizes="100vw" />
+            <source type="image/webp" srcset="images/optimized/hero-1-1280.webp 1280w, images/optimized/hero-1-1920.webp 1920w, images/optimized/hero-1-2560.webp 2560w" sizes="100vw" />
+            <img src="images/optimized/hero-1-2560.jpg" srcset="images/optimized/hero-1-1280.jpg 1280w, images/optimized/hero-1-1920.jpg 1920w, images/optimized/hero-1-2560.jpg 2560w"
+                 sizes="100vw" width="2560" height="1707"
+                 alt="Business professionals in Emirati and Western dress shaking hands in a bright modern walkway" fetchpriority="high" decoding="async" />
+          </picture>
         </div>
-        <!-- Floating WhatsApp button (hero) - moved into global floating actions -->
-        <!-- Floating cards removed per request -->
-        <!--
-        <div class="hero-image">
-          <div class="hero-illustration">
-            <div class="floating-card card-1">
-              <i class="fas fa-building"></i>
-              <span>Business Setup</span>
-            </div>
-            <div class="floating-card card-2">
-              <i class="fas fa-passport"></i>
-              <span>Visa Services</span>
-            </div>
-            <div class="floating-card card-3">
-              <i class="fas fa-calculator"></i>
-              <span>Tax Compliance</span>
-            </div>
-          </div>
+        <div class="hero-slide" style="--ph:#5e6d89">
+          <picture>
+            <source type="image/avif" srcset="images/optimized/hero-2-1280.avif 1280w, images/optimized/hero-2-1920.avif 1920w, images/optimized/hero-2-2560.avif 2560w" sizes="100vw" />
+            <source type="image/webp" srcset="images/optimized/hero-2-1280.webp 1280w, images/optimized/hero-2-1920.webp 1920w, images/optimized/hero-2-2560.webp 2560w" sizes="100vw" />
+            <img src="images/optimized/hero-2-2560.jpg" srcset="images/optimized/hero-2-1280.jpg 1280w, images/optimized/hero-2-1920.jpg 1920w, images/optimized/hero-2-2560.jpg 2560w"
+                 sizes="100vw" width="2560" height="1750"
+                 alt="Colleagues working in a high-rise corner office overlooking a city skyline at dusk" loading="lazy" decoding="async" />
+          </picture>
         </div>
-        -->
-        <!-- End floating cards -->
-      </div>
-    </section>
+        <div class="hero-slide" style="--ph:#a59c9c">
+          <picture>
+            <source type="image/avif" srcset="images/optimized/hero-3-1280.avif 1280w, images/optimized/hero-3-1920.avif 1920w, images/optimized/hero-3-2560.avif 2560w" sizes="100vw" />
+            <source type="image/webp" srcset="images/optimized/hero-3-1280.webp 1280w, images/optimized/hero-3-1920.webp 1920w, images/optimized/hero-3-2560.webp 2560w" sizes="100vw" />
+            <img src="images/optimized/hero-3-2560.jpg" srcset="images/optimized/hero-3-1280.jpg 1280w, images/optimized/hero-3-1920.jpg 1920w, images/optimized/hero-3-2560.jpg 2560w"
+                 sizes="100vw" width="2560" height="1707"
+                 alt="Three colleagues smiling as they review documents together on a tablet" loading="lazy" decoding="async" />
+          </picture>
+        </div>
+        <div class="hero-slide" style="--ph:#9b9996">
+          <picture>
+            <source type="image/avif" srcset="images/optimized/hero-1-1280.avif 1280w, images/optimized/hero-1-1920.avif 1920w, images/optimized/hero-1-2560.avif 2560w" sizes="100vw" />
+            <source type="image/webp" srcset="images/optimized/hero-1-1280.webp 1280w, images/optimized/hero-1-1920.webp 1920w, images/optimized/hero-1-2560.webp 2560w" sizes="100vw" />
+            <img src="images/optimized/hero-1-2560.jpg" srcset="images/optimized/hero-1-1280.jpg 1280w, images/optimized/hero-1-1920.jpg 1920w, images/optimized/hero-1-2560.jpg 2560w"
+                 sizes="100vw" width="2560" height="1707"
+                 alt="Business professionals in Emirati and Western dress shaking hands in a bright modern walkway" loading="lazy" decoding="async" />
+          </picture>
+        </div>
+        </div>
+        <div class="hero-overlay" aria-hidden="true"></div>
 
-    <!-- About Section -->
-    <section id="about" class="about">
-      <div class="container">
-        <div class="section-header">
-          <h2>About <span class="brand">binQad</span> Business Services</h2>
-          <p>
-            Your trusted partner for comprehensive business solutions in the UAE
-          </p>
-        </div>
-
-        <div class="about-content">
-          <div class="about-text">
-            <h3>Over 12 Years of Excellence</h3>
-            <p>
-              <span class="brand">binQad</span> Business Services LLC is a
-              UAE-based consultancy delivering end-to-end corporate solutions
-              for entrepreneurs, investors, and established businesses. With
-              over 12 years of industry experience, we help organizations
-              launch, operate, and scale with confidence by providing integrated
-              services that ensure regulatory compliance, operational clarity,
-              and sustainable growth.
+        <div class="hero-content">
+          <div class="hero-text">
+            <p class="hero-eyebrow">Dubai &middot; United Arab Emirates</p>
+            <h1>Building Successful Enterprises in the UAE</h1>
+            <p class="hero-lede">
+              Complete business solutions with over 12 years of expertise. From
+              setup to scale &mdash; we handle it all.
             </p>
+            <div class="hero-buttons">
+              <a href="#contact" class="btn-primary">Talk to an advisor</a>
+              <a href="#services" class="btn-secondary">Explore services</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-dots" role="group" aria-label="Hero image controls">
+          <button type="button" class="hero-dot is-active" data-slide="0"
+                  aria-label="Show slide 1 of 4" aria-current="true"></button>
+          <button type="button" class="hero-dot" data-slide="1"
+                  aria-label="Show slide 2 of 4" aria-current="false"></button>
+          <button type="button" class="hero-dot" data-slide="2"
+                  aria-label="Show slide 3 of 4" aria-current="false"></button>
+          <button type="button" class="hero-dot" data-slide="3"
+                  aria-label="Show slide 4 of 4" aria-current="false"></button>
+        </div>
+      </section>
+
+      <!-- About -->
+      <section id="about" class="about">
+        <div class="container">
+          <div class="section-header">
+            <h2>About <span class="brand">binQad</span> Business Services</h2>
+            <p>Your trusted partner for comprehensive business solutions in the UAE</p>
+          </div>
+
+          <div class="about-content">
+            <div class="about-text">
+              <h3>Over 12 Years of Excellence</h3>
+              <p class="about-lede">
+                <span class="brand">binQad</span> Business Services LLC is a
+                UAE-based consultancy delivering end-to-end corporate solutions
+                for entrepreneurs, investors, and established businesses. With
+                over 12 years of industry experience, we help organizations
+                launch, operate, and scale with confidence by providing integrated
+                services that ensure regulatory compliance, operational clarity,
+                and sustainable growth.
+              </p>
+            </div>
+
+            <dl class="about-stats">
+              <div class="stat">
+                <dt>Years of experience</dt>
+                <dd><span class="stat-num">12<span class="stat-plus">+</span></span></dd>
+              </div>
+              <div class="stat">
+                <dt>Service areas covered</dt>
+                <dd><span class="stat-num">8</span></dd>
+              </div>
+              <div class="stat">
+                <dt>Operating base</dt>
+                <dd><span class="stat-num stat-word">Dubai</span></dd>
+              </div>
+            </dl>
 
             <div class="mission-vision">
               <div class="mission">
-                <h4><i class="fas fa-bullseye"></i> Our Mission</h4>
+                <h4><i class="fas fa-bullseye" aria-hidden="true"></i> Our Mission</h4>
                 <p>
                   Delivering excellence in business management through
                   precision, compliance, and strategic insight, enabling our
@@ -157,7 +206,7 @@
                 </p>
               </div>
               <div class="vision">
-                <h4><i class="fas fa-eye"></i> Our Vision</h4>
+                <h4><i class="fas fa-eye" aria-hidden="true"></i> Our Vision</h4>
                 <p>
                   To become the UAE's most trusted partner for building
                   successful enterprises.
@@ -166,194 +215,193 @@
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- What Makes binQad Unique Section -->
-    <section id="uniqueness" class="uniqueness">
-      <div class="container">
-        <div class="section-header">
-          <h2>What Makes <span class="brand">binQad</span> Unique</h2>
-          <p>
-            Seven key differentiators that set us apart in the UAE business
-            services landscape
-          </p>
-        </div>
+      <!-- What Makes binQad Unique -->
+      <section id="uniqueness" class="uniqueness">
+        <div class="container">
+          <div class="section-header">
+            <h2>What Makes <span class="brand">binQad</span> Unique</h2>
+            <p>
+              Seven key differentiators that set us apart in the UAE business
+              services landscape
+            </p>
+          </div>
 
-        <div class="uniqueness-carousel">
-          <div class="carousel-container">
-            <div class="carousel-wrapper">
-              <div class="carousel-track" id="uniqueness-carousel-track">
-                <div class="unique-item" tabindex="0">
-                  <div class="unique-image">
-                    <img
-                      src="images/unique-1.jpg"
-                      alt="Complete Business Ecosystem"
-                      width="140" height="140"
-                      loading="lazy" decoding="async"
-                    />
-                  </div>
-                  <div class="unique-content">
-                    <h3>Complete Ecosystem</h3>
-                    <p class="unique-desc">
-                      binQad is not just a service provider — we operate as a
-                      full business support ecosystem. From business setup to
-                      compliance, HR, taxation, finance and strategy, every
-                      essential service is managed under one roof.
-                    </p>
-                  </div>
-                </div>
-
-                <div class="unique-item" tabindex="0">
-                  <div class="unique-image">
-                    <img
-                      src="images/unique-2.jpg"
-                      alt="Process-Driven Operations"
-                      width="140" height="140"
-                      loading="lazy" decoding="async"
-                    />
-                  </div>
-                  <div class="unique-content">
-                    <h3>Process‑Driven Ops</h3>
-                    <p class="unique-desc">
-                      Our operations run on structured systems and documented
-                      workflows, not individual dependency. This ensures
-                      reliability, consistency, and quality delivery at every
-                      stage of your business journey.
-                    </p>
-                  </div>
-                </div>
-
-                <div class="unique-item" tabindex="0">
-                  <div class="unique-image">
-                    <img
-                      src="images/unique-3.jpg"
-                      alt="SLA-Based Service Delivery"
-                      width="140" height="140"
-                      loading="lazy" decoding="async"
-                    />
-                  </div>
-                  <div class="unique-content">
-                    <h3>SLA-Based Delivery</h3>
-                    <p class="unique-desc">
-                      We work with defined service timelines and accountability
-                      standards. Clients experience transparency, faster
-                      processing, and professional control over every
-                      transaction and task.
-                    </p>
-                  </div>
-                </div>
-
-                <div class="unique-item" tabindex="0">
-                  <div class="unique-image">
-                    <img
-                      src="images/unique-4.jpg"
-                      alt="Strategic Business Advisory"
-                      width="140" height="140"
-                      loading="lazy" decoding="async"
-                    />
-                  </div>
-                  <div class="unique-content">
-                    <h3>Strategic Advisory</h3>
-                    <p class="unique-desc">
-                      binQad goes beyond paperwork by offering business advisory
-                      and optimization support. We help companies make informed
-                      decisions, not just complete formalities.
-                    </p>
-                  </div>
-                </div>
-
-                <div class="unique-item" tabindex="0">
-                  <div class="unique-image">
-                    <img
-                      src="images/unique-5.jpg"
-                      alt="Compliance-First Culture"
-                      width="140" height="140"
-                      loading="lazy" decoding="async"
-                    />
-                  </div>
-                  <div class="unique-content">
-                    <h3>Compliance‑First</h3>
-                    <p class="unique-desc">
-                      We proactively monitor regulatory requirements across
-                      visas, tax, labor, and licensing. This protects your
-                      business from penalties and unexpected operational risks.
-                    </p>
-                  </div>
-                </div>
-
-                <div class="unique-item" tabindex="0">
-                  <div class="unique-image">
-                    <img
-                      src="images/unique-6.jpg"
-                      alt="Transparency by Design"
-                      width="140" height="140"
-                      loading="lazy" decoding="async"
-                    />
-                  </div>
-                  <div class="unique-content">
-                    <h3>Transparency by Design</h3>
-                    <p class="unique-desc">
-                      Every process is structured to give clients clear
-                      visibility on cost, progress, and responsibility. No
-                      ambiguity. No hidden surprises.
-                    </p>
-                  </div>
-                </div>
-
-                <div class="unique-item" tabindex="0">
-                  <div class="unique-image">
-                    <img
-                      src="images/unique-7.jpg"
-                      alt="Long-term Partnerships"
-                      width="140" height="140"
-                      loading="lazy" decoding="async"
-                    />
-                  </div>
-                  <div class="unique-content">
-                    <h3>Relationship Focused</h3>
-                    <p class="unique-desc">
-                      We build long-term partnerships, not one-time deals. Our
-                      role is to grow with our clients, not just serve them.
-                    </p>
-                  </div>
-                </div>
-              </div>
+          <div class="uniqueness-grid">
+          <article class="unique-item" tabindex="0" role="button"
+                   aria-haspopup="dialog" aria-label="Complete Ecosystem — read more">
+            <div class="unique-image media" style="--ph:#6f6455">
+              <picture>
+                <source type="image/avif" srcset="images/optimized/unique-1-480.avif 480w, images/optimized/unique-1-800.avif 800w, images/optimized/unique-1-1200.avif 1200w" sizes="(min-width:1100px) 380px, (min-width:700px) 45vw, 92vw" />
+                <source type="image/webp" srcset="images/optimized/unique-1-480.webp 480w, images/optimized/unique-1-800.webp 800w, images/optimized/unique-1-1200.webp 1200w" sizes="(min-width:1100px) 380px, (min-width:700px) 45vw, 92vw" />
+                <img src="images/optimized/unique-1-800.jpg" srcset="images/optimized/unique-1-480.jpg 480w, images/optimized/unique-1-800.jpg 800w, images/optimized/unique-1-1200.jpg 1200w"
+                     sizes="(min-width:1100px) 380px, (min-width:700px) 45vw, 92vw" width="800" height="457"
+                     alt="Diverse team seated around a long table with a globe projected above it" loading="lazy" decoding="async" />
+              </picture>
             </div>
+            <div class="unique-content">
+              <span class="unique-number" aria-hidden="true">01</span>
+              <h3>Complete Ecosystem</h3>
+              <p class="unique-desc">binQad is not just a service provider — we operate as a full business support ecosystem. From business setup to compliance, HR, taxation, finance and strategy, every essential service is managed under one roof.</p>
+              <span class="card-cue" aria-hidden="true">Read more<i class="fas fa-arrow-right"></i></span>
+            </div>
+          </article>
+          <article class="unique-item" tabindex="0" role="button"
+                   aria-haspopup="dialog" aria-label="Process‑Driven Ops — read more">
+            <div class="unique-image media" style="--ph:#787879">
+              <picture>
+                <source type="image/avif" srcset="images/optimized/unique-2-480.avif 480w, images/optimized/unique-2-800.avif 800w, images/optimized/unique-2-1200.avif 1200w" sizes="(min-width:1100px) 380px, (min-width:700px) 45vw, 92vw" />
+                <source type="image/webp" srcset="images/optimized/unique-2-480.webp 480w, images/optimized/unique-2-800.webp 800w, images/optimized/unique-2-1200.webp 1200w" sizes="(min-width:1100px) 380px, (min-width:700px) 45vw, 92vw" />
+                <img src="images/optimized/unique-2-800.jpg" srcset="images/optimized/unique-2-480.jpg 480w, images/optimized/unique-2-800.jpg 800w, images/optimized/unique-2-1200.jpg 1200w"
+                     sizes="(min-width:1100px) 380px, (min-width:700px) 45vw, 92vw" width="800" height="532"
+                     alt="Person in a suit holding a tablet showing a checklist and process icons" loading="lazy" decoding="async" />
+              </picture>
+            </div>
+            <div class="unique-content">
+              <span class="unique-number" aria-hidden="true">02</span>
+              <h3>Process‑Driven Ops</h3>
+              <p class="unique-desc">Our operations run on structured systems and documented workflows, not individual dependency. This ensures reliability, consistency, and quality delivery at every stage of your business journey.</p>
+              <span class="card-cue" aria-hidden="true">Read more<i class="fas fa-arrow-right"></i></span>
+            </div>
+          </article>
+          <article class="unique-item" tabindex="0" role="button"
+                   aria-haspopup="dialog" aria-label="SLA-Based Delivery — read more">
+            <div class="unique-image media" style="--ph:#4b474d">
+              <picture>
+                <source type="image/avif" srcset="images/optimized/unique-3-480.avif 480w, images/optimized/unique-3-800.avif 800w, images/optimized/unique-3-1200.avif 1200w" sizes="(min-width:1100px) 380px, (min-width:700px) 45vw, 92vw" />
+                <source type="image/webp" srcset="images/optimized/unique-3-480.webp 480w, images/optimized/unique-3-800.webp 800w, images/optimized/unique-3-1200.webp 1200w" sizes="(min-width:1100px) 380px, (min-width:700px) 45vw, 92vw" />
+                <img src="images/optimized/unique-3-800.jpg" srcset="images/optimized/unique-3-480.jpg 480w, images/optimized/unique-3-800.jpg 800w, images/optimized/unique-3-1200.jpg 1200w"
+                     sizes="(min-width:1100px) 380px, (min-width:700px) 45vw, 92vw" width="800" height="450"
+                     alt="Colleague presenting a progress report to her team in an evening meeting" loading="lazy" decoding="async" />
+              </picture>
+            </div>
+            <div class="unique-content">
+              <span class="unique-number" aria-hidden="true">03</span>
+              <h3>SLA-Based Delivery</h3>
+              <p class="unique-desc">We work with defined service timelines and accountability standards. Clients experience transparency, faster processing, and professional control over every transaction and task.</p>
+              <span class="card-cue" aria-hidden="true">Read more<i class="fas fa-arrow-right"></i></span>
+            </div>
+          </article>
+          <article class="unique-item" tabindex="0" role="button"
+                   aria-haspopup="dialog" aria-label="Strategic Advisory — read more">
+            <div class="unique-image media" style="--ph:#969290">
+              <picture>
+                <source type="image/avif" srcset="images/optimized/unique-4-480.avif 480w, images/optimized/unique-4-800.avif 800w, images/optimized/unique-4-1200.avif 1200w" sizes="(min-width:1100px) 380px, (min-width:700px) 45vw, 92vw" />
+                <source type="image/webp" srcset="images/optimized/unique-4-480.webp 480w, images/optimized/unique-4-800.webp 800w, images/optimized/unique-4-1200.webp 1200w" sizes="(min-width:1100px) 380px, (min-width:700px) 45vw, 92vw" />
+                <img src="images/optimized/unique-4-800.jpg" srcset="images/optimized/unique-4-480.jpg 480w, images/optimized/unique-4-800.jpg 800w, images/optimized/unique-4-1200.jpg 1200w"
+                     sizes="(min-width:1100px) 380px, (min-width:700px) 45vw, 92vw" width="800" height="533"
+                     alt="Adviser guiding a seated team through charts and laptop data" loading="lazy" decoding="async" />
+              </picture>
+            </div>
+            <div class="unique-content">
+              <span class="unique-number" aria-hidden="true">04</span>
+              <h3>Strategic Advisory</h3>
+              <p class="unique-desc">binQad goes beyond paperwork by offering business advisory and optimization support. We help companies make informed decisions, not just complete formalities.</p>
+              <span class="card-cue" aria-hidden="true">Read more<i class="fas fa-arrow-right"></i></span>
+            </div>
+          </article>
+          <article class="unique-item" tabindex="0" role="button"
+                   aria-haspopup="dialog" aria-label="Compliance‑First — read more">
+            <div class="unique-image media" style="--ph:#8c8787">
+              <picture>
+                <source type="image/avif" srcset="images/optimized/unique-5-480.avif 480w, images/optimized/unique-5-800.avif 800w, images/optimized/unique-5-1200.avif 1200w" sizes="(min-width:1100px) 380px, (min-width:700px) 45vw, 92vw" />
+                <source type="image/webp" srcset="images/optimized/unique-5-480.webp 480w, images/optimized/unique-5-800.webp 800w, images/optimized/unique-5-1200.webp 1200w" sizes="(min-width:1100px) 380px, (min-width:700px) 45vw, 92vw" />
+                <img src="images/optimized/unique-5-800.jpg" srcset="images/optimized/unique-5-480.jpg 480w, images/optimized/unique-5-800.jpg 800w, images/optimized/unique-5-1200.jpg 1200w"
+                     sizes="(min-width:1100px) 380px, (min-width:700px) 45vw, 92vw" width="800" height="483"
+                     alt="Three colleagues reviewing documents at a white table beside a globe" loading="lazy" decoding="async" />
+              </picture>
+            </div>
+            <div class="unique-content">
+              <span class="unique-number" aria-hidden="true">05</span>
+              <h3>Compliance‑First</h3>
+              <p class="unique-desc">We proactively monitor regulatory requirements across visas, tax, labor, and licensing. This protects your business from penalties and unexpected operational risks.</p>
+              <span class="card-cue" aria-hidden="true">Read more<i class="fas fa-arrow-right"></i></span>
+            </div>
+          </article>
+          <article class="unique-item" tabindex="0" role="button"
+                   aria-haspopup="dialog" aria-label="Transparency by Design — read more">
+            <div class="unique-image media" style="--ph:#5c5147">
+              <picture>
+                <source type="image/avif" srcset="images/optimized/unique-6-480.avif 480w, images/optimized/unique-6-800.avif 800w, images/optimized/unique-6-1200.avif 1200w" sizes="(min-width:1100px) 380px, (min-width:700px) 45vw, 92vw" />
+                <source type="image/webp" srcset="images/optimized/unique-6-480.webp 480w, images/optimized/unique-6-800.webp 800w, images/optimized/unique-6-1200.webp 1200w" sizes="(min-width:1100px) 380px, (min-width:700px) 45vw, 92vw" />
+                <img src="images/optimized/unique-6-800.jpg" srcset="images/optimized/unique-6-480.jpg 480w, images/optimized/unique-6-800.jpg 800w, images/optimized/unique-6-1200.jpg 1200w"
+                     sizes="(min-width:1100px) 380px, (min-width:700px) 45vw, 92vw" width="800" height="560"
+                     alt="Two executives reviewing bar and pie charts on a presentation screen" loading="lazy" decoding="async" />
+              </picture>
+            </div>
+            <div class="unique-content">
+              <span class="unique-number" aria-hidden="true">06</span>
+              <h3>Transparency by Design</h3>
+              <p class="unique-desc">Every process is structured to give clients clear visibility on cost, progress, and responsibility. No ambiguity. No hidden surprises.</p>
+              <span class="card-cue" aria-hidden="true">Read more<i class="fas fa-arrow-right"></i></span>
+            </div>
+          </article>
+          <article class="unique-item" tabindex="0" role="button"
+                   aria-haspopup="dialog" aria-label="Relationship Focused — read more">
+            <div class="unique-image media" style="--ph:#959b95">
+              <picture>
+                <source type="image/avif" srcset="images/optimized/unique-7-480.avif 480w, images/optimized/unique-7-800.avif 800w, images/optimized/unique-7-1200.avif 1200w" sizes="(min-width:1100px) 380px, (min-width:700px) 45vw, 92vw" />
+                <source type="image/webp" srcset="images/optimized/unique-7-480.webp 480w, images/optimized/unique-7-800.webp 800w, images/optimized/unique-7-1200.webp 1200w" sizes="(min-width:1100px) 380px, (min-width:700px) 45vw, 92vw" />
+                <img src="images/optimized/unique-7-800.jpg" srcset="images/optimized/unique-7-480.jpg 480w, images/optimized/unique-7-800.jpg 800w, images/optimized/unique-7-1200.jpg 1200w"
+                     sizes="(min-width:1100px) 380px, (min-width:700px) 45vw, 92vw" width="800" height="533"
+                     alt="Two business partners clasping hands across a desk over a laptop" loading="lazy" decoding="async" />
+              </picture>
+            </div>
+            <div class="unique-content">
+              <span class="unique-number" aria-hidden="true">07</span>
+              <h3>Relationship Focused</h3>
+              <p class="unique-desc">We build long-term partnerships, not one-time deals. Our role is to grow with our clients, not just serve them.</p>
+              <span class="card-cue" aria-hidden="true">Read more<i class="fas fa-arrow-right"></i></span>
+            </div>
+          </article>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Services Section -->
-    <section id="services" class="services">
-      <div class="container">
-        <div class="section-header">
-          <h2>Our Comprehensive Services</h2>
-          <p>End-to-end business solutions tailored for your success</p>
-        </div>
+      <!-- Services -->
+      <section id="services" class="services">
+        <div class="container">
+          <div class="section-header">
+            <h2>Our Comprehensive Services</h2>
+            <p>End-to-end business solutions tailored for your success</p>
+          </div>
 
-        <div class="services-grid">
-          <div class="service-card">
-            <div class="service-image">
-              <img src="images/service-1.jpg" alt="UAE Business Setup" width="400" height="300" loading="lazy" decoding="async" />
+          <div class="services-grid">
+          <article class="service-card" tabindex="0" role="button"
+                   aria-haspopup="dialog" aria-label="UAE Business Setup — view details">
+            <div class="service-image media" style="--ph:#6f7473">
+              <picture>
+                <source type="image/avif" srcset="images/optimized/service-1-480.avif 480w, images/optimized/service-1-800.avif 800w" sizes="(min-width:1200px) 326px, (min-width:900px) 33vw, (min-width:600px) 48vw, 92vw" />
+                <source type="image/webp" srcset="images/optimized/service-1-480.webp 480w, images/optimized/service-1-800.webp 800w" sizes="(min-width:1200px) 326px, (min-width:900px) 33vw, (min-width:600px) 48vw, 92vw" />
+                <img src="images/optimized/service-1-800.jpg" srcset="images/optimized/service-1-480.jpg 480w, images/optimized/service-1-800.jpg 800w"
+                     sizes="(min-width:1200px) 326px, (min-width:900px) 33vw, (min-width:600px) 48vw, 92vw" width="800" height="800"
+                     alt="Advisers meeting with clients in Emirati dress around a boardroom table" loading="lazy" decoding="async" />
+              </picture>
             </div>
             <h3>UAE Business Setup</h3>
             <ul>
-              <li>Trade license issuance, renewal & amendment</li>
+              <li>Trade license issuance, renewal &amp; amendment</li>
               <li>Initial approvals and name reservation</li>
-              <li>Commercial permits & branch registration</li>
+              <li>Commercial permits &amp; branch registration</li>
               <li>Business compliance and inspections</li>
               <li>Investor advisory and setup guidance</li>
-              <li>Company amendments & liquidation support</li>
+              <li>Company amendments &amp; liquidation support</li>
             </ul>
-          </div>
-
-          <div class="service-card">
-            <div class="service-image">
-              <img src="images/service-2.jpg" alt="Visa & PRO" width="400" height="300" loading="lazy" decoding="async" />
+            <span class="card-cue" aria-hidden="true">View details<i class="fas fa-arrow-right"></i></span>
+          </article>
+          <article class="service-card" tabindex="0" role="button"
+                   aria-haspopup="dialog" aria-label="Visa &amp; PRO Services — view details">
+            <div class="service-image media" style="--ph:#8f8c89">
+              <picture>
+                <source type="image/avif" srcset="images/optimized/service-2-480.avif 480w, images/optimized/service-2-800.avif 800w, images/optimized/service-2-1200.avif 1200w" sizes="(min-width:1200px) 326px, (min-width:900px) 33vw, (min-width:600px) 48vw, 92vw" />
+                <source type="image/webp" srcset="images/optimized/service-2-480.webp 480w, images/optimized/service-2-800.webp 800w, images/optimized/service-2-1200.webp 1200w" sizes="(min-width:1200px) 326px, (min-width:900px) 33vw, (min-width:600px) 48vw, 92vw" />
+                <img src="images/optimized/service-2-800.jpg" srcset="images/optimized/service-2-480.jpg 480w, images/optimized/service-2-800.jpg 800w, images/optimized/service-2-1200.jpg 1200w"
+                     sizes="(min-width:1200px) 326px, (min-width:900px) 33vw, (min-width:600px) 48vw, 92vw" width="800" height="534"
+                     alt="Woman at a desk holding a phone, with a world map and globe behind her" loading="lazy" decoding="async" />
+              </picture>
             </div>
-            <h3>Visa & PRO Services</h3>
+            <h3>Visa &amp; PRO Services</h3>
             <ul>
               <li>Employment, family, visit visa processing</li>
               <li>Golden visa processing</li>
@@ -362,50 +410,61 @@
               <li>Work permits and labour services</li>
               <li>DHA, EHS, VIP medicals application</li>
             </ul>
-          </div>
-
-          <div class="service-card">
-            <div class="service-image">
-              <img
-                src="images/service-3.jpg"
-                alt="Attestation & Legalisation"
-                width="400" height="300"
-                loading="lazy" decoding="async"
-              />
+            <span class="card-cue" aria-hidden="true">View details<i class="fas fa-arrow-right"></i></span>
+          </article>
+          <article class="service-card" tabindex="0" role="button"
+                   aria-haspopup="dialog" aria-label="Attestation &amp; Legalisation — view details">
+            <div class="service-image media" style="--ph:#b6a69f">
+              <picture>
+                <source type="image/avif" srcset="images/optimized/service-3-480.avif 480w, images/optimized/service-3-800.avif 800w, images/optimized/service-3-1200.avif 1200w" sizes="(min-width:1200px) 326px, (min-width:900px) 33vw, (min-width:600px) 48vw, 92vw" />
+                <source type="image/webp" srcset="images/optimized/service-3-480.webp 480w, images/optimized/service-3-800.webp 800w, images/optimized/service-3-1200.webp 1200w" sizes="(min-width:1200px) 326px, (min-width:900px) 33vw, (min-width:600px) 48vw, 92vw" />
+                <img src="images/optimized/service-3-800.jpg" srcset="images/optimized/service-3-480.jpg 480w, images/optimized/service-3-800.jpg 800w, images/optimized/service-3-1200.jpg 1200w"
+                     sizes="(min-width:1200px) 326px, (min-width:900px) 33vw, (min-width:600px) 48vw, 92vw" width="800" height="640"
+                     alt="Hand pressing a wax seal onto an official certificate beside a laptop" loading="lazy" decoding="async" />
+              </picture>
             </div>
-            <h3>Attestation & Legalisation</h3>
+            <h3>Attestation &amp; Legalisation</h3>
             <ul>
-              <li>Educational, commercial & personal attestations</li>
+              <li>Educational, commercial &amp; personal attestations</li>
               <li>Embassy and MOFA attestations</li>
               <li>Labour contract attestation</li>
               <li>Certificate legalization</li>
               <li>Lawyer attestation</li>
             </ul>
-          </div>
-
-          <div class="service-card">
-            <div class="service-image">
-              <img src="images/service-4.avif" alt="Accounting & Bookkeeping" width="400" height="300" loading="lazy" decoding="async" />
+            <span class="card-cue" aria-hidden="true">View details<i class="fas fa-arrow-right"></i></span>
+          </article>
+          <article class="service-card" tabindex="0" role="button"
+                   aria-haspopup="dialog" aria-label="Accounting &amp; Bookkeeping — view details">
+            <div class="service-image media" style="--ph:#a19f96">
+              <picture>
+                <source type="image/avif" srcset="images/optimized/service-4-480.avif 480w, images/optimized/service-4-800.avif 800w" sizes="(min-width:1200px) 326px, (min-width:900px) 33vw, (min-width:600px) 48vw, 92vw" />
+                <source type="image/webp" srcset="images/optimized/service-4-480.webp 480w, images/optimized/service-4-800.webp 800w" sizes="(min-width:1200px) 326px, (min-width:900px) 33vw, (min-width:600px) 48vw, 92vw" />
+                <img src="images/optimized/service-4-800.jpg" srcset="images/optimized/service-4-480.jpg 480w, images/optimized/service-4-800.jpg 800w"
+                     sizes="(min-width:1200px) 326px, (min-width:900px) 33vw, (min-width:600px) 48vw, 92vw" width="800" height="533"
+                     alt="Accountant using a calculator over printed financial reports and charts" loading="lazy" decoding="async" />
+              </picture>
             </div>
-            <h3>Accounting & Bookkeeping</h3>
+            <h3>Accounting &amp; Bookkeeping</h3>
             <ul>
               <li>Bookkeeping and financial reporting</li>
               <li>Invoice setup and accounts management</li>
               <li>Audit support and documentation</li>
               <li>Payroll accounting and expense tracking</li>
             </ul>
-          </div>
-
-          <div class="service-card">
-            <div class="service-image">
-              <img
-                src="images/service-5.webp"
-                alt="Tax Registration & Compliance"
-                width="400" height="300"
-                loading="lazy" decoding="async"
-              />
+            <span class="card-cue" aria-hidden="true">View details<i class="fas fa-arrow-right"></i></span>
+          </article>
+          <article class="service-card" tabindex="0" role="button"
+                   aria-haspopup="dialog" aria-label="Tax Registration &amp; Compliance — view details">
+            <div class="service-image media" style="--ph:#afa698">
+              <picture>
+                <source type="image/avif" srcset="images/optimized/service-5-480.avif 480w, images/optimized/service-5-800.avif 800w" sizes="(min-width:1200px) 326px, (min-width:900px) 33vw, (min-width:600px) 48vw, 92vw" />
+                <source type="image/webp" srcset="images/optimized/service-5-480.webp 480w, images/optimized/service-5-800.webp 800w" sizes="(min-width:1200px) 326px, (min-width:900px) 33vw, (min-width:600px) 48vw, 92vw" />
+                <img src="images/optimized/service-5-800.jpg" srcset="images/optimized/service-5-480.jpg 480w, images/optimized/service-5-800.jpg 800w"
+                     sizes="(min-width:1200px) 326px, (min-width:900px) 33vw, (min-width:600px) 48vw, 92vw" width="800" height="553"
+                     alt="Wooden blocks spelling Tax Compliance beside a gavel on printed tax forms" loading="lazy" decoding="async" />
+              </picture>
             </div>
-            <h3>Tax Registration & Compliance</h3>
+            <h3>Tax Registration &amp; Compliance</h3>
             <ul>
               <li>VAT registration and deregistration</li>
               <li>VAT filing and reporting</li>
@@ -413,31 +472,40 @@
               <li>FTA amendments and compliance support</li>
               <li>Overdue filing and penalty resolution</li>
             </ul>
-          </div>
-
-          <div class="service-card">
-            <div class="service-image">
-              <img src="images/service-6.jpg" alt="HR Consulting & Payroll" width="400" height="300" loading="lazy" decoding="async" />
+            <span class="card-cue" aria-hidden="true">View details<i class="fas fa-arrow-right"></i></span>
+          </article>
+          <article class="service-card" tabindex="0" role="button"
+                   aria-haspopup="dialog" aria-label="HR Consulting &amp; Payroll — view details">
+            <div class="service-image media" style="--ph:#bebeb6">
+              <picture>
+                <source type="image/avif" srcset="images/optimized/service-6-480.avif 480w, images/optimized/service-6-800.avif 800w" sizes="(min-width:1200px) 326px, (min-width:900px) 33vw, (min-width:600px) 48vw, 92vw" />
+                <source type="image/webp" srcset="images/optimized/service-6-480.webp 480w, images/optimized/service-6-800.webp 800w" sizes="(min-width:1200px) 326px, (min-width:900px) 33vw, (min-width:600px) 48vw, 92vw" />
+                <img src="images/optimized/service-6-800.jpg" srcset="images/optimized/service-6-480.jpg 480w, images/optimized/service-6-800.jpg 800w"
+                     sizes="(min-width:1200px) 326px, (min-width:900px) 33vw, (min-width:600px) 48vw, 92vw" width="800" height="533"
+                     alt="HR professional smiling while reviewing paperwork at her desk" loading="lazy" decoding="async" />
+              </picture>
             </div>
-            <h3>HR Consulting & Payroll</h3>
+            <h3>HR Consulting &amp; Payroll</h3>
             <ul>
               <li>Labour contracts and amendments</li>
               <li>WPS registration and salary processing</li>
               <li>HR policy structure and documentation</li>
               <li>Emiratisation advisory and Nafis support</li>
             </ul>
-          </div>
-
-          <div class="service-card">
-            <div class="service-image">
-              <img
-                src="images/service-7.jpg"
-                alt="Business Strategy & Optimization"
-                width="400" height="300"
-                loading="lazy" decoding="async"
-              />
+            <span class="card-cue" aria-hidden="true">View details<i class="fas fa-arrow-right"></i></span>
+          </article>
+          <article class="service-card" tabindex="0" role="button"
+                   aria-haspopup="dialog" aria-label="Business Strategy &amp; Optimization — view details">
+            <div class="service-image media" style="--ph:#a9a9ac">
+              <picture>
+                <source type="image/avif" srcset="images/optimized/service-7-480.avif 480w, images/optimized/service-7-800.avif 800w, images/optimized/service-7-1200.avif 1200w" sizes="(min-width:1200px) 326px, (min-width:900px) 33vw, (min-width:600px) 48vw, 92vw" />
+                <source type="image/webp" srcset="images/optimized/service-7-480.webp 480w, images/optimized/service-7-800.webp 800w, images/optimized/service-7-1200.webp 1200w" sizes="(min-width:1200px) 326px, (min-width:900px) 33vw, (min-width:600px) 48vw, 92vw" />
+                <img src="images/optimized/service-7-800.jpg" srcset="images/optimized/service-7-480.jpg 480w, images/optimized/service-7-800.jpg 800w, images/optimized/service-7-1200.jpg 1200w"
+                     sizes="(min-width:1200px) 326px, (min-width:900px) 33vw, (min-width:600px) 48vw, 92vw" width="800" height="533"
+                     alt="Team reviewing performance charts on screen during a strategy meeting" loading="lazy" decoding="async" />
+              </picture>
             </div>
-            <h3>Business Strategy & Optimization</h3>
+            <h3>Business Strategy &amp; Optimization</h3>
             <ul>
               <li>Business structuring and growth advisory</li>
               <li>Operational streamlining</li>
@@ -445,16 +513,18 @@
               <li>Compliance risk management</li>
               <li>Process planning</li>
             </ul>
-          </div>
-
-          <div class="service-card">
-            <div class="service-image">
-              <img
-                src="images/service-8.jpeg"
-                alt="Corporate Support Services"
-                width="400" height="300"
-                loading="lazy" decoding="async"
-              />
+            <span class="card-cue" aria-hidden="true">View details<i class="fas fa-arrow-right"></i></span>
+          </article>
+          <article class="service-card" tabindex="0" role="button"
+                   aria-haspopup="dialog" aria-label="Corporate Support Services — view details">
+            <div class="service-image media" style="--ph:#9e8f8b">
+              <picture>
+                <source type="image/avif" srcset="images/optimized/service-8-480.avif 480w, images/optimized/service-8-800.avif 800w, images/optimized/service-8-1200.avif 1200w" sizes="(min-width:1200px) 326px, (min-width:900px) 33vw, (min-width:600px) 48vw, 92vw" />
+                <source type="image/webp" srcset="images/optimized/service-8-480.webp 480w, images/optimized/service-8-800.webp 800w, images/optimized/service-8-1200.webp 1200w" sizes="(min-width:1200px) 326px, (min-width:900px) 33vw, (min-width:600px) 48vw, 92vw" />
+                <img src="images/optimized/service-8-800.jpg" srcset="images/optimized/service-8-480.jpg 480w, images/optimized/service-8-800.jpg 800w, images/optimized/service-8-1200.jpg 1200w"
+                     sizes="(min-width:1200px) 326px, (min-width:900px) 33vw, (min-width:600px) 48vw, 92vw" width="800" height="533"
+                     alt="Team joining hands together over a desk in a show of shared support" loading="lazy" decoding="async" />
+              </picture>
             </div>
             <h3>Corporate Support Services</h3>
             <ul>
@@ -464,90 +534,76 @@
               <li>Bank account opening assistance</li>
               <li>Ongoing administrative support</li>
             </ul>
+            <span class="card-cue" aria-hidden="true">View details<i class="fas fa-arrow-right"></i></span>
+          </article>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-      <div class="container">
-        <div class="section-header">
-          <h2>Contact <span class="brand">binQad</span></h2>
-          <p>Your trusted business partner in the UAE</p>
-        </div>
+      <!-- Contact -->
+      <section id="contact" class="contact">
+        <div class="container">
+          <div class="section-header">
+            <h2>Contact <span class="brand">binQad</span></h2>
+            <p>Your trusted business partner in the UAE</p>
+          </div>
 
-        <div class="contact-professional">
-          <div class="contact-card-simple">
-            <div class="contact-grid">
-              <div class="contact-item-pro office-location">
-                <div class="contact-icon-pro">
-                  <i class="fas fa-phone-alt"></i>
-                </div>
-                <div class="contact-text">
-                  <h4>Call Us</h4>
-                  <p class="contact-link-lines">
-                    <a href="tel:+971542346645" class="contact-link"
-                      >+971 54 234 6645</a
-                    ><br />
-                    <a href="tel:+97145663154" class="contact-link"
-                      >+971 4 566 3154</a
-                    >
-                  </p>
-                </div>
+          <div class="contact-grid">
+            <div class="contact-item-pro">
+              <span class="contact-icon-pro"><i class="fas fa-phone-alt" aria-hidden="true"></i></span>
+              <div class="contact-text">
+                <h4>Call Us</h4>
+                <p class="contact-link-lines">
+                  <a href="tel:+971542346645" class="contact-link">+971 54 234 6645</a>
+                  <a href="tel:+97145663154" class="contact-link">+971 4 566 3154</a>
+                </p>
               </div>
+            </div>
 
-              <div class="contact-item-pro office-location">
-                <div class="contact-icon-pro">
-                  <i class="fas fa-envelope"></i>
-                </div>
-                <div class="contact-text">
-                  <h4>Email Us</h4>
-                  <a href="mailto:info@binqad.ae" class="contact-link"
-                    >info@binqad.ae</a
-                  >
-                </div>
+            <div class="contact-item-pro">
+              <span class="contact-icon-pro"><i class="fas fa-envelope" aria-hidden="true"></i></span>
+              <div class="contact-text">
+                <h4>Email Us</h4>
+                <p><a href="mailto:info@binqad.ae" class="contact-link">info@binqad.ae</a></p>
               </div>
+            </div>
 
-              <div
-                class="contact-item-pro office-location"
-                onclick="window.open('https://www.google.com/maps/place/Binqad+Business+Services+LLC/@25.2857233,55.3604656,17z/data=!3m1!4b1!4m6!3m5!1s0x3e5f5de454bc0831:0x51da2a93bb8729ca!8m2!3d25.2857233!4d55.3604656!16s%2Fg%2F11yn_04ntz?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoKLDEwMDc5MjA2OUgBUAM%3D', '_blank')"
-              >
-                <div class="contact-icon-pro">
-                  <i class="fas fa-map-marker-alt"></i>
-                </div>
-                <div class="contact-text">
-                  <h4>Visit Our Office</h4>
-                  <p>Saheel Tower 1, Office 1706<br />Al Nahda 1, Dubai, UAE</p>
-                </div>
+            <a
+              class="contact-item-pro office-location"
+              href="https://www.google.com/maps/place/Binqad+Business+Services+LLC/@25.2857233,55.3604656,17z/data=!3m1!4b1!4m6!3m5!1s0x3e5f5de454bc0831:0x51da2a93bb8729ca!8m2!3d25.2857233!4d55.3604656!16s%2Fg%2F11yn_04ntz?entry=ttu&amp;g_ep=EgoyMDI1MTIwOS4wIKXMDSoKLDEwMDc5MjA2OUgBUAM%3D"
+              target="_blank"
+              rel="noopener"
+            >
+              <span class="contact-icon-pro"><i class="fas fa-map-marker-alt" aria-hidden="true"></i></span>
+              <div class="contact-text">
+                <h4>Visit Our Office <i class="fas fa-arrow-up-right-from-square cue" aria-hidden="true"></i></h4>
+                <p>Saheel Tower 1, Office 1706<br />Al Nahda 1, Dubai, UAE</p>
               </div>
+            </a>
 
-              <div class="contact-item-pro office-location">
-                <div class="contact-icon-pro">
-                  <i class="fas fa-clock"></i>
-                </div>
-                <div class="contact-text">
-                  <h4>Business Hours</h4>
-                  <p>Monday - Saturday: 9 AM - 6 PM<br />Sunday: Closed</p>
-                </div>
+            <div class="contact-item-pro">
+              <span class="contact-icon-pro"><i class="fas fa-clock" aria-hidden="true"></i></span>
+              <div class="contact-text">
+                <h4>Business Hours</h4>
+                <p>Monday &ndash; Saturday: 9 AM &ndash; 6 PM<br />Sunday: Closed</p>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </main>
 
     <!-- Footer -->
     <footer class="footer">
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
-            <div class="footer-logo">
-              <div class="nav-logo-footer">
-                <img src="images/logo3.png" alt="binQad Business Services" width="80" height="80" loading="lazy" />
-              </div>
-
-            
+            <div class="nav-logo-footer">
+              <picture>
+                <source type="image/webp" srcset="images/optimized/logo3-200.webp" />
+                <img src="images/optimized/logo3-200.png" width="200" height="76"
+                     alt="binQad Business Services" loading="lazy" decoding="async" />
+              </picture>
             </div>
             <p>
               Your trusted partner for comprehensive business solutions in the
@@ -572,7 +628,7 @@
               <li><a href="#services">Business Setup</a></li>
               <li><a href="#services">Visa Services</a></li>
               <li><a href="#services">Tax Compliance</a></li>
-              <li><a href="#services">HR & Payroll</a></li>
+              <li><a href="#services">HR &amp; Payroll</a></li>
             </ul>
           </div>
 
@@ -580,16 +636,19 @@
             <h4>Contact Info</h4>
             <div class="footer-contact">
               <p>
-                <i class="fas fa-mobile-alt"></i>
+                <i class="fas fa-mobile-alt" aria-hidden="true"></i>
                 <a href="tel:+971542346645">+971 54 234 6645</a>
               </p>
               <p class="footer-office-phone">
-                <i class="fas fa-phone-square"></i>
+                <i class="fas fa-phone-square" aria-hidden="true"></i>
                 <a href="tel:+97145663154">+971 4 566 3154</a>
               </p>
-              <p><i class="fas fa-envelope"></i> info@binqad.ae</p>
+              <p>
+                <i class="fas fa-envelope" aria-hidden="true"></i>
+                <a href="mailto:info@binqad.ae">info@binqad.ae</a>
+              </p>
               <p class="footer-address">
-                <i class="fas fa-map-marker-alt"></i>
+                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
                 <span class="footer-address-lines">
                   <span>Binqad Business Services LLC</span>
                   <span>Office No : 1706, Saheel Tower 1, Al Nahda 1, Dubai, UAE</span>
@@ -601,28 +660,32 @@
 
         <div class="footer-bottom">
           <p>
-            &copy; <span id="copyright-year">2024</span> <span class="brand">binQad</span> Business Services LLC.
-            All rights reserved.
+            &copy; <span id="copyright-year">2024</span>
+            <span class="brand">binQad</span> Business Services LLC. All rights reserved.
           </p>
         </div>
       </div>
     </footer>
 
-    <script src="js/script.js"></script>
-    <!-- Service details modal -->
+    <!-- Service / differentiator details modal -->
     <div id="service-modal-overlay" class="modal-overlay" aria-hidden="true">
       <div
         id="service-modal"
         class="service-modal"
         role="dialog"
         aria-modal="true"
+        aria-labelledby="service-modal-title"
       >
-        <button class="modal-close" id="service-modal-close" aria-label="Close">
-          &times;
+        <button class="modal-close" id="service-modal-close" type="button" aria-label="Close dialog">
+          <i class="fas fa-xmark" aria-hidden="true"></i>
         </button>
         <div class="modal-body">
-          <div class="modal-image">
-            <img src="" alt="" id="service-modal-image" width="500" height="375" loading="eager" decoding="async" />
+          <div class="modal-image media">
+            <picture>
+              <source id="service-modal-avif" type="image/avif" />
+              <source id="service-modal-webp" type="image/webp" />
+              <img src="" alt="" id="service-modal-image" width="800" height="600" decoding="async" />
+            </picture>
           </div>
           <div class="modal-info">
             <h3 id="service-modal-title"></h3>
@@ -632,23 +695,19 @@
       </div>
     </div>
 
-    <!-- Floating actions: stack chat + back-to-top to avoid overlap -->
-    <div class="floating-actions" aria-hidden="false">
+    <!-- Floating actions -->
+    <div class="floating-actions">
       <a
         href="https://wa.me/971542346645"
         class="hero-whatsapp"
         target="_blank"
-        aria-label="Chat on WhatsApp"
+        rel="noopener"
+        aria-label="Chat with binQad on WhatsApp"
       >
-        <i class="fab fa-whatsapp"></i>
+        <i class="fab fa-whatsapp" aria-hidden="true"></i>
       </a>
-
-      <!-- Back-to-top disabled per request (commented out) -->
-      <!--
-      <button id="back-to-top" class="back-to-top" aria-label="Back to top">
-        <i class="fas fa-arrow-up"></i>
-      </button>
-      -->
     </div>
+
+    <script src="js/script.js" defer></script>
   </body>
 </html>
