@@ -5,7 +5,7 @@
      1. media loading states      5. scroll reveal
      2. navigation                6. details modal
      3. hero carousel             7. footer year
-     4. active section link
+     4. active section link       8. lead form → WhatsApp
    ========================================================================== */
 (function () {
   "use strict";
@@ -190,7 +190,7 @@
      ------------------------------------------------------------------------ */
   function initReveal() {
     var targets = document.querySelectorAll(
-      ".unique-item, .service-card, .contact-item-pro, .mission, .vision, .about-stats"
+      ".unique-item, .service-card, .lead-card, .contact-item-pro, .mission, .vision, .about-stats"
     );
     if (!targets.length) return;
 
@@ -444,6 +444,153 @@
     if (el) el.textContent = String(new Date().getFullYear());
   }
 
+  /* ---------------------------------------------------------------------------
+     8. Lead form — validates the enquiry, then opens a WhatsApp chat with the
+        details pre-filled. The destination number lives in the form's
+        data-whatsapp attribute (country code + number, digits only).
+     ------------------------------------------------------------------------ */
+  function initLeadForm() {
+    var form = document.getElementById("lead-form");
+    var success = document.getElementById("lead-success");
+    if (!form || !success) return;
+
+    var number = (form.getAttribute("data-whatsapp") || "").replace(/\D/g, "");
+    var waLink = document.getElementById("lead-whatsapp-link");
+    var successName = document.getElementById("lead-success-name");
+    var resetBtn = document.getElementById("lead-reset");
+    var EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+    function value(name) {
+      return form.elements[name].value.trim();
+    }
+
+    function selectedServices() {
+      return Array.prototype.filter
+        .call(form.querySelectorAll('input[name="services"]'), function (c) { return c.checked; })
+        .map(function (c) { return c.value; });
+    }
+
+    // Each check returns an error message, or "" when the field is valid
+    var checks = {
+      name: function () {
+        return value("name").length >= 2 ? "" : "Please enter your name.";
+      },
+      email: function () {
+        var v = value("email");
+        if (!v) return "Please enter your email address.";
+        return EMAIL.test(v) ? "" : "Please enter a valid email address.";
+      },
+      phone: function () {
+        var v = value("phone");
+        if (!v) return "Please enter your contact number.";
+        var digits = v.replace(/\D/g, "").length;
+        return /^\+?[\d\s()-]+$/.test(v) && digits >= 7 && digits <= 15
+          ? ""
+          : "Please enter a valid contact number.";
+      },
+      services: function () {
+        return selectedServices().length ? "" : "Please choose at least one service.";
+      }
+    };
+
+    function fieldWrap(key) {
+      return form.querySelector('[data-field="' + key + '"]');
+    }
+
+    function validate(key) {
+      var wrap = fieldWrap(key);
+      var message = checks[key]();
+      wrap.classList.toggle("is-invalid", !!message);
+      wrap.querySelector(".field-error").textContent = message;
+      var input = wrap.querySelector('input:not([type="checkbox"])');
+      if (input) input.setAttribute("aria-invalid", String(!!message));
+      return !message;
+    }
+
+    function clearErrors() {
+      Object.keys(checks).forEach(function (key) {
+        var wrap = fieldWrap(key);
+        wrap.classList.remove("is-invalid");
+        wrap.querySelector(".field-error").textContent = "";
+        var input = wrap.querySelector('input:not([type="checkbox"])');
+        if (input) input.removeAttribute("aria-invalid");
+      });
+    }
+
+    // Validate on blur once something is typed; re-check live once flagged
+    ["name", "email", "phone"].forEach(function (key) {
+      var input = form.elements[key];
+      input.addEventListener("blur", function () {
+        if (input.value.trim()) validate(key);
+      });
+      input.addEventListener("input", function () {
+        if (fieldWrap(key).classList.contains("is-invalid")) validate(key);
+      });
+    });
+
+    form.addEventListener("change", function (e) {
+      if (e.target.name === "services" && fieldWrap("services").classList.contains("is-invalid")) {
+        validate("services");
+      }
+    });
+
+    function buildMessage() {
+      var lines = [
+        "Hello binQad, I'd like to enquire about your services.",
+        "",
+        "*Name:* " + value("name"),
+        "*Email:* " + value("email"),
+        "*Contact number:* " + value("phone"),
+        "*Required services:*"
+      ];
+      selectedServices().forEach(function (s) { lines.push("• " + s); });
+      return lines.join("\n");
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      var firstInvalid = null;
+      Object.keys(checks).forEach(function (key) {
+        if (!validate(key) && !firstInvalid) firstInvalid = key;
+      });
+      if (firstInvalid) {
+        var target = firstInvalid === "services"
+          ? form.querySelector('input[name="services"]')
+          : form.elements[firstInvalid];
+        target.focus();
+        return;
+      }
+
+      var url = "https://wa.me/" + number + "?text=" + encodeURIComponent(buildMessage());
+
+      // Opened inside the submit gesture so popup blockers allow it;
+      // fall back to same-tab navigation if it is blocked anyway.
+      var win = window.open(url, "_blank");
+      if (win) {
+        win.opener = null;
+      } else {
+        window.location.href = url;
+        return;
+      }
+
+      var first = value("name").split(/\s+/)[0];
+      successName.textContent = first ? ", " + first : "";
+      waLink.href = url;
+      form.hidden = true;
+      success.hidden = false;
+      success.focus({ preventScroll: true });
+    });
+
+    resetBtn.addEventListener("click", function () {
+      form.reset();
+      clearErrors();
+      success.hidden = true;
+      form.hidden = false;
+      form.elements.name.focus();
+    });
+  }
+
   /* ------------------------------------------------------------------------ */
   function init() {
     initMediaLoading();
@@ -453,6 +600,7 @@
     initReveal();
     initModal();
     initFooterYear();
+    initLeadForm();
   }
 
   if (document.readyState === "loading") {

@@ -548,6 +548,90 @@
             <p>Your trusted business partner in the UAE</p>
           </div>
 
+          <div class="contact-layout">
+          <!-- Lead form: validated client-side, then handed to WhatsApp.
+               Change the destination number via data-whatsapp (country code, digits only). -->
+          <div class="lead-card" id="enquiry">
+            <form class="lead-form" id="lead-form" data-whatsapp="917558967081" novalidate
+                  aria-labelledby="lead-title">
+              <div class="lead-head">
+                <span class="lead-eyebrow"><i class="fab fa-whatsapp" aria-hidden="true"></i> Quick enquiry</span>
+                <h3 id="lead-title">Tell us what you need</h3>
+                <p>Share a few details and our advisors will continue the conversation with you on WhatsApp.</p>
+              </div>
+
+              <div class="field" data-field="name">
+                <label for="lead-name">Name</label>
+                <div class="field-control">
+                  <i class="fas fa-user" aria-hidden="true"></i>
+                  <input id="lead-name" name="name" type="text" autocomplete="name"
+                         placeholder="Your full name" required aria-describedby="lead-name-error" />
+                </div>
+                <p class="field-error" id="lead-name-error"></p>
+              </div>
+
+              <div class="lead-row">
+                <div class="field" data-field="email">
+                  <label for="lead-email">Email ID</label>
+                  <div class="field-control">
+                    <i class="fas fa-envelope" aria-hidden="true"></i>
+                    <input id="lead-email" name="email" type="email" autocomplete="email"
+                           placeholder="you@company.com" required aria-describedby="lead-email-error" />
+                  </div>
+                  <p class="field-error" id="lead-email-error"></p>
+                </div>
+
+                <div class="field" data-field="phone">
+                  <label for="lead-phone">Contact number</label>
+                  <div class="field-control">
+                    <i class="fas fa-phone-alt" aria-hidden="true"></i>
+                    <input id="lead-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel"
+                           placeholder="+971 50 123 4567" required aria-describedby="lead-phone-error" />
+                  </div>
+                  <p class="field-error" id="lead-phone-error"></p>
+                </div>
+              </div>
+
+              <fieldset class="field service-picker" data-field="services" aria-describedby="lead-services-error">
+                <legend>Required services <span class="field-hint">Select one or more</span></legend>
+                <div class="service-chips">
+                  <label class="chip"><input type="checkbox" name="services" value="UAE Business Setup" /><span><i class="fas fa-building" aria-hidden="true"></i>UAE Business Setup</span></label>
+                  <label class="chip"><input type="checkbox" name="services" value="Visa &amp; PRO Services" /><span><i class="fas fa-passport" aria-hidden="true"></i>Visa &amp; PRO Services</span></label>
+                  <label class="chip"><input type="checkbox" name="services" value="Attestation &amp; Legalisation" /><span><i class="fas fa-stamp" aria-hidden="true"></i>Attestation &amp; Legalisation</span></label>
+                  <label class="chip"><input type="checkbox" name="services" value="Accounting &amp; Bookkeeping" /><span><i class="fas fa-calculator" aria-hidden="true"></i>Accounting &amp; Bookkeeping</span></label>
+                  <label class="chip"><input type="checkbox" name="services" value="Tax Registration &amp; Compliance" /><span><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i>Tax Registration &amp; Compliance</span></label>
+                  <label class="chip"><input type="checkbox" name="services" value="HR Consulting &amp; Payroll" /><span><i class="fas fa-users" aria-hidden="true"></i>HR Consulting &amp; Payroll</span></label>
+                  <label class="chip"><input type="checkbox" name="services" value="Business Strategy &amp; Optimization" /><span><i class="fas fa-chart-line" aria-hidden="true"></i>Business Strategy &amp; Optimization</span></label>
+                  <label class="chip"><input type="checkbox" name="services" value="Corporate Support Services" /><span><i class="fas fa-briefcase" aria-hidden="true"></i>Corporate Support Services</span></label>
+                </div>
+                <p class="field-error" id="lead-services-error"></p>
+              </fieldset>
+
+              <button type="submit" class="btn-primary lead-submit">
+                <i class="fab fa-whatsapp" aria-hidden="true"></i> Send enquiry on WhatsApp
+              </button>
+              <p class="lead-note">
+                <i class="fas fa-lock" aria-hidden="true"></i>
+                Your details are only used to respond to your enquiry.
+              </p>
+            </form>
+
+            <div class="lead-success" id="lead-success" hidden tabindex="-1" role="status">
+              <span class="lead-success-icon"><i class="fas fa-check" aria-hidden="true"></i></span>
+              <h3>Thank you<span id="lead-success-name"></span>!</h3>
+              <p>
+                WhatsApp has opened with your enquiry ready to go &mdash; just tap
+                <strong>Send</strong> and our team will get back to you shortly.
+              </p>
+              <div class="lead-success-actions">
+                <a class="btn-primary" id="lead-whatsapp-link" href="#" target="_blank" rel="noopener">
+                  <i class="fab fa-whatsapp" aria-hidden="true"></i> Open WhatsApp again
+                </a>
+                <button type="button" class="btn-ghost" id="lead-reset">Send another enquiry</button>
+              </div>
+            </div>
+          </div>
+
           <div class="contact-grid">
             <div class="contact-item-pro">
               <span class="contact-icon-pro"><i class="fas fa-phone-alt" aria-hidden="true"></i></span>
@@ -588,6 +672,7 @@
                 <p>Monday &ndash; Saturday: 9 AM &ndash; 6 PM<br />Sunday: Closed</p>
               </div>
             </div>
+          </div>
           </div>
         </div>
       </section>
